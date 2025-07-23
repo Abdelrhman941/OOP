@@ -1,0 +1,3348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Python OOP Reference for Data Science - Ultimate Guide</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-dark.min.css" rel="stylesheet" id="prism-dark-theme" disabled>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #059669;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --card-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --highlight-bg: #dbeafe;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --code-bg: #334155;
+            --highlight-bg: #1e40af;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-color) 0%, var(--card-bg) 100%);
+            color: var(--text-color);
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            transition: all 0.3s ease;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { 
+            font-size: 2rem; 
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        h3 { 
+            font-size: 1.5rem; 
+            color: var(--secondary);
+        }
+        h4 { font-size: 1.25rem; }
+
+        .toc {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .toc h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .toc-column {
+            background: rgba(37, 99, 235, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .toc a {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+            padding-left: 1rem;
+            border-left: 3px solid var(--primary);
+            background: var(--highlight-bg);
+        }
+
+        .toc a:last-child {
+            border-bottom: none;
+        }
+
+        pre {
+            background: var(--code-bg) !important;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--accent) 0%, var(--accent) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.2em;
+            background-position: 0 88%;
+            padding: 0.1em 0.3em;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .icon-box {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .icon-box:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+
+        .icon-box i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .best-practice {
+            background: linear-gradient(135deg, var(--success) 0.1, rgba(16, 185, 129, 0.1));
+            border: 1px solid var(--success);
+            border-left: 4px solid var(--success);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+            border: 1px solid var(--warning);
+            border-left: 4px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .error-box {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            border: 1px solid var(--danger);
+            border-left: 4px solid var(--danger);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(37, 99, 235, 0.05));
+            border: 1px solid var(--primary);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05));
+            border: 1px solid var(--secondary);
+            border-left: 4px solid var(--secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            color: var(--text-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .nav-header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        [data-theme="dark"] .nav-header {
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo i {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 2000;
+            transition: width 0.1s ease;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            min-width: 70px;
+            justify-content: center;
+        }
+
+        pre {
+            position: relative;
+        }
+
+        pre:hover .copy-button {
+            opacity: 1;
+        }
+
+        .copy-button:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .copy-button:active {
+            transform: scale(0.95);
+        }
+
+        .copy-button:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            pre {
+                font-size: 0.8rem;
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body { 
+                print-color-adjust: exact;
+                background: white !important;
+            }
+            .no-print { 
+                display: none !important; 
+            }
+            .section { 
+                page-break-inside: avoid;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .hero-section {
+                background: var(--primary) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* Dark theme syntax highlighting */
+        [data-theme="dark"] .token.comment,
+        [data-theme="dark"] .token.prolog,
+        [data-theme="dark"] .token.doctype,
+        [data-theme="dark"] .token.cdata {
+            color: #6b7280;
+        }
+
+        [data-theme="dark"] .token.punctuation {
+            color: #d1d5db;
+        }
+
+        [data-theme="dark"] .token.property,
+        [data-theme="dark"] .token.tag,
+        [data-theme="dark"] .token.boolean,
+        [data-theme="dark"] .token.number,
+        [data-theme="dark"] .token.constant,
+        [data-theme="dark"] .token.symbol,
+        [data-theme="dark"] .token.deleted {
+            color: #fbbf24;
+        }
+
+        [data-theme="dark"] .token.selector,
+        [data-theme="dark"] .token.attr-name,
+        [data-theme="dark"] .token.string,
+        [data-theme="dark"] .token.char,
+        [data-theme="dark"] .token.builtin,
+        [data-theme="dark"] .token.inserted {
+            color: #34d399;
+        }
+
+        [data-theme="dark"] .token.operator,
+        [data-theme="dark"] .token.entity,
+        [data-theme="dark"] .token.url,
+        [data-theme="dark"] .language-css .token.string,
+        [data-theme="dark"] .style .token.string {
+            color: #60a5fa;
+        }
+
+        [data-theme="dark"] .token.atrule,
+        [data-theme="dark"] .token.attr-value,
+        [data-theme="dark"] .token.keyword {
+            color: #a78bfa;
+        }
+
+        [data-theme="dark"] .token.function,
+        [data-theme="dark"] .token.class-name {
+            color: #fbbf24;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--card-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--secondary), var(--primary));
+        }
+    </style>
+</head>
+<!-- --------------------------------------------------------------------- -->
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Navigation Header -->
+    <header class="nav-header no-print">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>OOP for Data Science</span>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                    <span id="theme-text">Dark Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+<!-- --------------------------------------------------------------------- -->
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Complete Python OOP Reference</h1>
+                <p class="hero-subtitle">The Ultimate Guide to Object-Oriented Programming for Data Science & Machine Learning</p>
+                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <div style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                        <i class="fas fa-python"></i> Python 3.x
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                        <i class="fas fa-brain"></i> Machine Learning
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                        <i class="fas fa-chart-bar"></i> Data Science
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                        <i class="fas fa-graduation-cap"></i> Complete Guide
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- --------------------------------------------------------------------- -->
+    <div class="container" style="margin-top: 3rem;">
+        <!-- Table of Contents -->
+        <div class="toc section">
+            <h2><i class="fas fa-list"></i> Complete Table of Contents</h2>
+            <div class="toc-grid">
+                <div class="toc-column">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-play"></i> Fundamentals</h4>
+                    <a href="#introduction">1. Introduction to OOP</a>
+                    <a href="#classes-objects">2. Classes and Objects</a>
+                    <a href="#attributes-methods">3. Attributes & Methods</a>
+                    <a href="#encapsulation">4. Encapsulation</a>
+                </div>
+                <div class="toc-column">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-layer-group"></i> Core Concepts</h4>
+                    <a href="#inheritance">5. Inheritance</a>
+                    <a href="#polymorphism">6. Polymorphism</a>
+                    <a href="#special-methods">7. Special Methods</a>
+                </div>
+                <div class="toc-column">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-cogs"></i> Advanced Topics</h4>
+                    <a href="#abstract-classes">8. Abstract Base Classes</a>
+                    <a href="#design-patterns">9. Design Patterns</a>
+                    <a href="#testing">10. Testing OOP Code</a>
+                </div>
+                <div class="toc-column">
+                    <h4 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-rocket"></i> Practical Applications</h4>
+                    <a href="#best-practices">11. Best Practices</a>
+                    <a href="#project-structure">12. Project Structure</a>
+                </div>
+            </div>
+        </div>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 1: Introduction -->
+        <section id="introduction" class="section">
+            <div class="card">
+                <h2><i class="fas fa-lightbulb"></i> 1. Introduction to OOP for Data Science</h2>
+                <p>Object-Oriented Programming (OOP) is a programming paradigm that organizes code into <span class="highlight">classes</span> and <span class="highlight">objects</span>. In Data Science and Machine Learning, OOP helps create reusable, maintainable, and scalable code structures.</p>
+
+                <h3>Why OOP Matters in Data Science</h3>
+                <div class="grid grid-3">
+                    <div class="icon-box">
+                        <i class="fas fa-recycle"></i>
+                        <h4>Reusability</h4>
+                        <p>Create components once, use them everywhere. Build a model class and reuse it across different projects.</p>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Maintainability</h4>
+                        <p>Organize complex ML pipelines into manageable, well-structured components that are easy to debug and modify.</p>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                        <h4>Scalability</h4>
+                        <p>Build systems that can grow from prototype to production without complete rewrites.</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4><i class="fas fa-lightbulb"></i> Real-World Example</h4>
+                    <p>Instead of writing separate functions for different ML models, you can create a base <code>Model</code> class and inherit from it to create <code>LinearRegression</code>, <code>RandomForest</code>, and <code>NeuralNetwork</code> classes.</p>
+                </div>
+
+                <h3>Core OOP Principles</h3>
+                <div class="grid grid-2">
+                    <div class="info-box">
+                        <h4><i class="fas fa-box"></i> Encapsulation</h4>
+                        <p>Bundle data and methods that work on that data within a single unit (class). Hide internal implementation details.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-sitemap"></i> Inheritance</h4>
+                        <p>Create new classes based on existing ones, inheriting their properties and methods while adding new functionality.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-shapes"></i> Polymorphism</h4>
+                        <p>Use a single interface to represent different types of objects, allowing different classes to be used interchangeably.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4><i class="fas fa-atom"></i> Abstraction</h4>
+                        <p>Focus on essential features while hiding complex implementation details. Work with high-level concepts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 2: Classes and Objects -->
+        <section id="classes-objects" class="section">
+            <div class="card">
+                <h2><i class="fas fa-cube"></i> 2. Classes and Objects in Python</h2>
+                <p>A <strong>class</strong> is a blueprint for creating objects. An <strong>object</strong> is an instance of a class.</p>
+
+                <h3>Basic Class Syntax</h3>
+                <pre><code class="language-python">class DataProcessor:
+    """A simple data processor for cleaning datasets."""
+    
+    def __init__(self, dataset_name):
+        self.dataset_name = dataset_name
+        self.data = None
+        self.is_cleaned = False
+    
+    def load_data(self, filepath):
+        """Load data from a file."""
+        print(f"Loading data from {filepath}")
+        # Simulate data loading
+        self.data = [1, 2, 3, 4, 5]
+        return self.data
+    
+    def clean_data(self):
+        """Clean the loaded data."""
+        if self.data is None:
+            raise ValueError("No data loaded. Call load_data() first.")
+        
+        print(f"Cleaning data for {self.dataset_name}")
+        # Simulate data cleaning
+        self.data = [x for x in self.data if x > 0]
+        self.is_cleaned = True
+        return self.data
+
+# Creating objects (instances)
+processor1 = DataProcessor("Customer Data")
+processor2 = DataProcessor("Sales Data")
+
+# Using the objects
+processor1.load_data("customers.csv")
+processor1.clean_data()
+print(f"Processor 1 status: {processor1.is_cleaned}")
+
+processor2.load_data("sales.csv")
+print(f"Processor 2 data: {processor2.data}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <div class="best-practice">
+                    <h4><i class="fas fa-star"></i> Best Practice</h4>
+                    <p>Use descriptive class names that clearly indicate their purpose. For data science, consider names like <code>FeatureEngineer</code>, <code>ModelTrainer</code>, or <code>DataValidator</code>.</p>
+                </div>
+
+                <h3>Class vs Instance Attributes</h3>
+                <pre><code class="language-python">class MLModel:
+    # Class attribute (shared by all instances)
+    model_type = "Machine Learning Model"
+    created_models = 0
+    
+    def __init__(self, algorithm, hyperparameters=None):
+        # Instance attributes (unique to each instance)
+        self.algorithm = algorithm
+        self.hyperparameters = hyperparameters or {}
+        self.is_trained = False
+        self.accuracy = None
+        
+        # Update class attribute
+        MLModel.created_models += 1
+    
+    def train(self, X_train, y_train):
+        """Train the model."""
+        print(f"Training {self.algorithm} model...")
+        self.is_trained = True
+        self.accuracy = 0.95  # Simulated accuracy
+        return self
+    
+    def predict(self, X_test):
+        """Make predictions."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained before making predictions")
+        return [1, 0, 1, 0]  # Simulated predictions
+    
+    @property
+    def status(self):
+        """Get model training status."""
+        return "Trained" if self.is_trained else "Not Trained"
+
+# Usage example
+model1 = MLModel("Random Forest", {"n_estimators": 100})
+model2 = MLModel("SVM", {"C": 1.0, "kernel": "rbf"})
+
+print(f"Created models: {MLModel.created_models}")
+print(f"Model 1 status: {model1.status}")
+
+# Train and use the model
+model1.train([], [])  # Simulated training data
+print(f"Model 1 status after training: {model1.status}")
+print(f"Model 1 accuracy: {model1.accuracy}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 3: Attributes and Methods -->
+        <section id="attributes-methods" class="section">
+            <div class="card">
+                <h2><i class="fas fa-tools"></i> 3. Attributes and Methods</h2>
+                <p>Attributes store data, while methods define behavior. Understanding different types of attributes and methods is crucial for effective OOP design.</p>
+
+                <h3>Property Decorators</h3>
+                <p>Properties allow you to access methods like attributes, perfect for computed values in data science.</p>
+
+                <pre><code class="language-python">import pandas as pd
+import numpy as np
+
+class Dataset:
+    def __init__(self, data):
+        self._data = data
+    
+    @property
+    def shape(self):
+        """Get the shape of the dataset."""
+        return self._data.shape
+    
+    @property
+    def missing_percentage(self):
+        """Calculate percentage of missing values."""
+        total_cells = np.prod(self._data.shape)
+        missing_cells = self._data.isnull().sum().sum()
+        return (missing_cells / total_cells) * 100
+    
+    @property
+    def memory_usage(self):
+        """Calculate memory usage in MB."""
+        return self._data.memory_usage(deep=True).sum() / 1024**2
+    
+    @property
+    def numeric_columns(self):
+        """Get list of numeric columns."""
+        return self._data.select_dtypes(include=[np.number]).columns.tolist()
+    
+    @property
+    def categorical_columns(self):
+        """Get list of categorical columns."""
+        return self._data.select_dtypes(include=['object', 'category']).columns.tolist()
+
+# Usage
+data = pd.DataFrame({
+    'age': [25, 30, np.nan, 35, 40],
+    'income': [50000, 60000, 55000, np.nan, 70000],
+    'score': [85, 90, 88, 92, np.nan],
+    'category': ['A', 'B', 'A', 'C', 'B']
+})
+
+dataset = Dataset(data)
+print(f"Shape: {dataset.shape}")
+print(f"Missing data: {dataset.missing_percentage:.1f}%")
+print(f"Memory usage: {dataset.memory_usage:.2f} MB")
+print(f"Numeric columns: {dataset.numeric_columns}")
+print(f"Categorical columns: {dataset.categorical_columns}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <h3>Class Methods and Static Methods</h3>
+                <pre><code class="language-python">class ModelUtils:
+    """Utility class for model operations."""
+    
+    supported_algorithms = ['linear_regression', 'random_forest', 'svm', 'neural_network']
+    
+    @classmethod
+    def create_model(cls, algorithm, **kwargs):
+        """Class method to create model instances."""
+        if algorithm not in cls.supported_algorithms:
+            raise ValueError(f"Unsupported algorithm: {algorithm}")
+        
+        if algorithm == 'linear_regression':
+            return LinearRegressionModel(**kwargs)
+        elif algorithm == 'random_forest':
+            return RandomForestModel(**kwargs)
+        # ... other algorithms
+        
+    @staticmethod
+    def calculate_accuracy(y_true, y_pred):
+        """Static method for accuracy calculation."""
+        correct = sum(1 for true, pred in zip(y_true, y_pred) if true == pred)
+        return correct / len(y_true)
+    
+    @staticmethod
+    def split_data(X, y, test_size=0.2, random_state=42):
+        """Static method for data splitting."""
+        from sklearn.model_selection import train_test_split
+        return train_test_split(X, y, test_size=test_size, random_state=random_state)
+
+# Usage
+model = ModelUtils.create_model('random_forest', n_estimators=100)
+accuracy = ModelUtils.calculate_accuracy([1, 0, 1, 1], [1, 0, 0, 1])
+print(f"Accuracy: {accuracy:.2f}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 4: Encapsulation -->
+        <section id="encapsulation" class="section">
+            <div class="card">
+                <h2><i class="fas fa-lock"></i> 4. Encapsulation</h2>
+                <p>Encapsulation is about bundling data and methods together while controlling access to them. Python uses naming conventions to indicate access levels.</p>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-info-circle"></i> Python Access Modifiers</h4>
+                    <ul>
+                        <li><strong>Public:</strong> <code>attribute</code> - Accessible from anywhere</li>
+                        <li><strong>Protected:</strong> <code>_attribute</code> - Should only be used within class and subclasses</li>
+                        <li><strong>Private:</strong> <code>__attribute</code> - Name mangled, harder to access from outside</li>
+                    </ul>
+                </div>
+
+                <pre><code class="language-python">class DataPipeline:
+    def __init__(self, name):
+        self.name = name                    # Public
+        self._steps = []                    # Protected
+        self.__fitted = False               # Private
+        self.__results = None              # Private
+    
+    def add_step(self, step_name, transformer):
+        """Add a processing step to the pipeline."""
+        self._steps.append({
+            'name': step_name,
+            'transformer': transformer,
+            'fitted': False
+        })
+    
+    def _validate_data(self, data):
+        """Protected method for data validation."""
+        if data is None:
+            raise ValueError("Data cannot be None")
+        if len(data) == 0:
+            raise ValueError("Data cannot be empty")
+        return True
+    
+    def fit(self, X, y=None):
+        """Fit the pipeline on training data."""
+        self._validate_data(X)
+        
+        print(f"Fitting pipeline: {self.name}")
+        for step in self._steps:
+            print(f"  Fitting step: {step['name']}")
+            step['fitted'] = True
+        
+        self.__fitted = True
+        self.__results = {"fit_time": 0.5, "n_steps": len(self._steps)}
+        return self
+    
+    def transform(self, X):
+        """Transform data using fitted pipeline."""
+        if not self.__fitted:
+            raise ValueError("Pipeline must be fitted before transform")
+        
+        self._validate_data(X)
+        
+        print(f"Transforming data with {len(self._steps)} steps")
+        # Simulate transformation
+        return X
+    
+    def get_results(self):
+        """Get pipeline results (controlled access to private data)."""
+        if not self.__fitted:
+            return {"status": "not_fitted"}
+        return self.__results.copy()  # Return copy to prevent modification
+
+# Usage example
+pipeline = DataPipeline("Feature Engineering Pipeline")
+pipeline.add_step("scaler", "StandardScaler")
+pipeline.add_step("pca", "PCA")
+
+# This works - public interface
+data = [[1, 2, 3], [4, 5, 6]]
+pipeline.fit(data)
+transformed = pipeline.transform(data)
+results = pipeline.get_results()
+
+print(f"Results: {results}")
+
+# Protected attributes can be accessed but shouldn't be
+print(f"Steps (protected): {len(pipeline._steps)}")
+
+# Private attributes are name-mangled (avoid accessing)
+# print(pipeline.__fitted)  # This would raise AttributeError
+# But you can still access via name mangling (not recommended):
+# print(pipeline._DataPipeline__fitted)
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Important Note</h4>
+                    <p>Python's access control is based on convention, not strict enforcement. The leading underscore is a signal to other developers that the attribute/method is internal. Always respect these conventions in your code and when using other libraries.</p>
+                </div>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 5: Inheritance -->
+        <section id="inheritance" class="section">
+            <div class="card">
+                <h2><i class="fas fa-sitemap"></i> 5. Inheritance</h2>
+                <p>Inheritance allows you to create new classes based on existing ones, promoting code reuse and establishing relationships between classes.</p>
+
+                <pre><code class="language-python">class BaseModel:
+    """Base class for all machine learning models."""
+    
+    def __init__(self, name):
+        self.name = name
+        self.is_trained = False
+        self.training_history = []
+    
+    def prepare_data(self, X, y=None):
+        """Prepare data for training (can be overridden)."""
+        print(f"Preparing data for {self.name}")
+        # Default implementation
+        return X, y
+    
+    def evaluate(self, X_test, y_test):
+        """Evaluate model performance."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained before evaluation")
+        
+        predictions = self.predict(X_test)
+        accuracy = sum(1 for i, j in zip(y_test, predictions) if i == j) / len(y_test)
+        return {'accuracy': accuracy, 'model': self.name}
+    
+    def save_model(self, filepath):
+        """Save model to file."""
+        print(f"Saving {self.name} to {filepath}")
+        # Implementation would save model state
+
+class LinearRegressionModel(BaseModel):
+    """Linear Regression implementation."""
+    
+    def __init__(self, regularization=None):
+        super().__init__("Linear Regression")
+        self.regularization = regularization
+        self.coefficients = None
+        self.intercept = None
+    
+    def train(self, X, y):
+        """Train the linear regression model."""
+        X, y = self.prepare_data(X, y)  # Use inherited method
+        
+        print(f"Training {self.name} with regularization: {self.regularization}")
+        # Simulate training
+        self.coefficients = [0.5] * len(X[0]) if X else []
+        self.intercept = 0.1
+        self.is_trained = True
+        
+        self.training_history.append({
+            'samples': len(X),
+            'features': len(X[0]) if X else 0
+        })
+        return self
+    
+    def predict(self, X):
+        """Make predictions."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained first")
+        
+        # Simplified prediction
+        return [sum(x) * 0.1 + self.intercept for x in X]
+
+class RandomForestModel(BaseModel):
+    """Random Forest implementation."""
+    
+    def __init__(self, n_estimators=100, max_depth=None):
+        super().__init__("Random Forest")
+        self.n_estimators = n_estimators
+        self.max_depth = max_depth
+        self.trees = []
+    
+    def train(self, X, y):
+        """Train the random forest model."""
+        X, y = self.prepare_data(X, y)
+        
+        print(f"Training {self.name} with {self.n_estimators} trees")
+        # Simulate training multiple trees
+        self.trees = [f"tree_{i}" for i in range(self.n_estimators)]
+        self.is_trained = True
+        
+        self.training_history.append({
+            'samples': len(X),
+            'features': len(X[0]) if X else 0,
+            'trees': self.n_estimators
+        })
+        return self
+    
+    def predict(self, X):
+        """Make predictions using ensemble of trees."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained first")
+        
+        # Simplified ensemble prediction
+        return [1 if sum(x) > 5 else 0 for x in X]
+    
+    def get_feature_importance(self):
+        """Get feature importance (specific to Random Forest)."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained first")
+        
+        # Simulate feature importance
+        return {"feature_0": 0.4, "feature_1": 0.6}
+
+# Usage example
+training_data = [[1, 2], [3, 4], [5, 6], [7, 8]]
+target_data = [0, 1, 0, 1]
+test_data = [[2, 3], [4, 5]]
+test_targets = [1, 0]
+
+# Create and train models
+lr_model = LinearRegressionModel(regularization="ridge")
+rf_model = RandomForestModel(n_estimators=50, max_depth=10)
+
+lr_model.train(training_data, target_data)
+rf_model.train(training_data, target_data)
+
+# Use inherited methods
+lr_results = lr_model.evaluate(test_data, test_targets)
+rf_results = rf_model.evaluate(test_data, test_targets)
+
+print(f"Linear Regression Results: {lr_results}")
+print(f"Random Forest Results: {rf_results}")
+
+# Use specific methods
+rf_importance = rf_model.get_feature_importance()
+print(f"Feature importance: {rf_importance}")
+
+# Check training history (inherited attribute)
+print(f"LR Training History: {lr_model.training_history}")
+print(f"RF Training History: {rf_model.training_history}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <div class="best-practice">
+                    <h4><i class="fas fa-star"></i> Inheritance Best Practices</h4>
+                    <ul>
+                        <li>Use inheritance to model "is-a" relationships</li>
+                        <li>Keep inheritance hierarchies shallow (3-4 levels max)</li>
+                        <li>Override methods to specialize behavior</li>
+                        <li>Use <code>super()</code> to call parent class methods</li>
+                        <li>Consider composition over inheritance for complex relationships</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 6: Polymorphism -->
+        <section id="polymorphism" class="section">
+            <div class="card">
+                <h2><i class="fas fa-shapes"></i> 6. Polymorphism</h2>
+                <p>Polymorphism allows objects of different classes to be treated as objects of a common base class, enabling flexible and reusable code.</p>
+
+                <pre><code class="language-python">class ModelTrainer:
+    """Trains and evaluates different types of models."""
+    
+    def __init__(self):
+        self.trained_models = []
+        self.results = {}
+    
+    def train_model(self, model, X_train, y_train, X_test, y_test):
+        """Train any model that follows the common interface."""
+        print(f"\n--- Training {model.name} ---")
+        
+        # All models have the same interface (polymorphism)
+        model.train(X_train, y_train)
+        predictions = model.predict(X_test)
+        results = model.evaluate(X_test, y_test)
+        
+        self.trained_models.append(model)
+        self.results[model.name] = results
+        
+        print(f"✅ {model.name} trained successfully!")
+        print(f"📊 Results: {results}")
+        
+        return results
+    
+    def compare_models(self):
+        """Compare all trained models."""
+        print("\n🏆 Model Comparison:")
+        print("-" * 50)
+        
+        sorted_models = sorted(
+            self.results.items(), 
+            key=lambda x: x[1]['accuracy'], 
+            reverse=True
+        )
+        
+        for rank, (name, results) in enumerate(sorted_models, 1):
+            print(f"{rank}. {name}: {results['accuracy']:.3f}")
+        
+        if sorted_models:
+            best_model = sorted_models[0][0]
+            print(f"\n🥇 Best performing model: {best_model}")
+            return best_model
+
+# Different model implementations with same interface
+class LogisticRegression(BaseModel):
+    def __init__(self):
+        super().__init__("Logistic Regression")
+        self.weights = None
+    
+    def train(self, X, y):
+        X, y = self.prepare_data(X, y)
+        print(f"Training {self.name} with gradient descent...")
+        self.weights = [0.3] * len(X[0]) if X else []
+        self.is_trained = True
+        return self
+    
+    def predict(self, X):
+        if not self.is_trained:
+            raise ValueError("Model must be trained first")
+        # Simplified logistic prediction
+        return [1 if sum(x) > 3 else 0 for x in X]
+
+class SupportVectorMachine(BaseModel):
+    def __init__(self, kernel='rbf'):
+        super().__init__(f"SVM ({kernel})")
+        self.kernel = kernel
+        self.support_vectors = None
+    
+    def train(self, X, y):
+        X, y = self.prepare_data(X, y)
+        print(f"Training {self.name} with {self.kernel} kernel...")
+        self.support_vectors = X[:3]  # Simplified
+        self.is_trained = True
+        return self
+    
+    def predict(self, X):
+        if not self.is_trained:
+            raise ValueError("Model must be trained first")
+        # Simplified SVM prediction
+        return [0 if sum(x) < 4 else 1 for x in X]
+
+# Polymorphism in action
+trainer = ModelTrainer()
+
+# Create different models
+models = [
+    LinearRegressionModel(),
+    LogisticRegression(),
+    RandomForestModel(n_estimators=50),
+    SupportVectorMachine(kernel='linear')
+]
+
+# Generate sample data
+training_data = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]
+training_labels = [0, 1, 0, 1, 0]
+test_data = [[2, 3], [4, 5], [6, 7], [8, 9], [10, 11]]
+test_labels = [1, 0, 1, 0, 1]
+
+# Train all models using the same interface (polymorphism)
+for model in models:
+    trainer.train_model(model, training_data, training_labels, test_data, test_labels)
+
+# Compare all models
+best_model = trainer.compare_models()
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <div class="best-practice">
+                    <h4><i class="fas fa-star"></i> Polymorphism Benefits</h4>
+                    <ul>
+                        <li><strong>Flexibility:</strong> Add new model types without changing existing code</li>
+                        <li><strong>Maintainability:</strong> Single interface for multiple implementations</li>
+                        <li><strong>Testability:</strong> Easy to mock and test individual components</li>
+                        <li><strong>Scalability:</strong> Extend functionality through new classes</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 7: Special Methods -->
+        <section id="special-methods" class="section">
+            <div class="card">
+                <h2><i class="fas fa-magic"></i> 7. Special Methods (Magic Methods)</h2>
+                <p>Special methods (dunder methods) allow your classes to integrate with Python's built-in functions and operators.</p>
+
+                <pre><code class="language-python">class DataBatch:
+    """A batch of data that behaves like a container."""
+    
+    def __init__(self, data, labels=None):
+        self.data = list(data)
+        self.labels = list(labels) if labels else [None] * len(data)
+        
+        if len(self.data) != len(self.labels):
+            raise ValueError("Data and labels must have the same length")
+    
+    def __len__(self):
+        """Return the number of items in the batch."""
+        return len(self.data)
+    
+    def __getitem__(self, index):
+        """Get item by index - enables batch[i] syntax."""
+        if isinstance(index, slice):
+            return DataBatch(self.data[index], self.labels[index])
+        return (self.data[index], self.labels[index])
+    
+    def __setitem__(self, index, value):
+        """Set item by index - enables batch[i] = value syntax."""
+        if isinstance(value, tuple) and len(value) == 2:
+            self.data[index], self.labels[index] = value
+        else:
+            raise ValueError("Value must be a tuple of (data, label)")
+    
+    def __iter__(self):
+        """Make the batch iterable."""
+        for i in range(len(self)):
+            yield self[i]
+    
+    def __repr__(self):
+        """Developer-friendly string representation."""
+        return f"DataBatch(size={len(self)}, data={self.data[:3]}{'...' if len(self) > 3 else ''})"
+    
+    def __str__(self):
+        """User-friendly string representation."""
+        return f"DataBatch with {len(self)} samples"
+    
+    def __add__(self, other):
+        """Combine two batches using + operator."""
+        if not isinstance(other, DataBatch):
+            raise TypeError("Can only add DataBatch objects")
+        
+        combined_data = self.data + other.data
+        combined_labels = self.labels + other.labels
+        return DataBatch(combined_data, combined_labels)
+    
+    def __eq__(self, other):
+        """Check equality between batches."""
+        if not isinstance(other, DataBatch):
+            return False
+        return self.data == other.data and self.labels == other.labels
+    
+    def __contains__(self, item):
+        """Check if item is in batch data."""
+        return item in self.data
+    
+    def __bool__(self):
+        """Boolean conversion - False if empty."""
+        return len(self.data) > 0
+
+# Usage examples
+batch1 = DataBatch([1, 2, 3, 4], ['a', 'b', 'c', 'd'])
+batch2 = DataBatch([5, 6, 7], ['e', 'f', 'g'])
+
+# __len__
+print(f"Batch 1 length: {len(batch1)}")
+
+# __getitem__
+print(f"First item: {batch1[0]}")
+print(f"Slice: {batch1[1:3]}")
+
+# __setitem__
+batch1[0] = (10, 'z')
+print(f"Modified first item: {batch1[0]}")
+
+# __iter__
+print("Iterating through batch:")
+for data, label in batch1:
+    print(f"  Data: {data}, Label: {label}")
+
+# __repr__ and __str__
+print(f"Repr: {repr(batch1)}")
+print(f"Str: {str(batch1)}")
+
+# __add__
+combined_batch = batch1 + batch2
+print(f"Combined batch: {combined_batch}")
+
+# __contains__
+print(f"Is 2 in batch1? {2 in batch1}")
+print(f"Is 10 in batch1? {10 in batch1}")
+
+# __bool__
+empty_batch = DataBatch([], [])
+print(f"Empty batch is truthy: {bool(empty_batch)}")
+print(f"Non-empty batch is truthy: {bool(batch1)}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <h3>Comparison and Arithmetic Operations</h3>
+                <pre><code class="language-python">class ModelScore:
+    """Represents a model's performance score."""
+    
+    def __init__(self, accuracy, precision, recall, model_name="Unknown"):
+        self.accuracy = accuracy
+        self.precision = precision
+        self.recall = recall
+        self.model_name = model_name
+    
+    @property
+    def f1_score(self):
+        """Calculate F1 score."""
+        if self.precision + self.recall == 0:
+            return 0
+        return 2 * (self.precision * self.recall) / (self.precision + self.recall)
+    
+    def __lt__(self, other):
+        """Less than comparison based on F1 score."""
+        return self.f1_score < other.f1_score
+    
+    def __le__(self, other):
+        """Less than or equal comparison."""
+        return self.f1_score <= other.f1_score
+    
+    def __gt__(self, other):
+        """Greater than comparison."""
+        return self.f1_score > other.f1_score
+    
+    def __ge__(self, other):
+        """Greater than or equal comparison."""
+        return self.f1_score >= other.f1_score
+    
+    def __eq__(self, other):
+        """Equality comparison."""
+        return abs(self.f1_score - other.f1_score) < 1e-6
+    
+    def __add__(self, other):
+        """Average two scores."""
+        if not isinstance(other, ModelScore):
+            raise TypeError("Can only add ModelScore objects")
+        
+        avg_accuracy = (self.accuracy + other.accuracy) / 2
+        avg_precision = (self.precision + other.precision) / 2
+        avg_recall = (self.recall + other.recall) / 2
+        
+        return ModelScore(avg_accuracy, avg_precision, avg_recall, "Average")
+    
+    def __str__(self):
+        return (f"{self.model_name}: Acc={self.accuracy:.3f}, "
+                f"Prec={self.precision:.3f}, Rec={self.recall:.3f}, "
+                f"F1={self.f1_score:.3f}")
+
+# Usage
+score1 = ModelScore(0.85, 0.80, 0.90, "Random Forest")
+score2 = ModelScore(0.82, 0.88, 0.76, "SVM")
+score3 = ModelScore(0.88, 0.85, 0.85, "Neural Network")
+
+# Comparison operations
+print(f"RF > SVM: {score1 > score2}")
+print(f"NN > RF: {score3 > score1}")
+
+# Sorting models by performance
+models = [score1, score2, score3]
+models.sort(reverse=True)  # Sort by F1 score (descending)
+
+print("\nModels ranked by F1 score:")
+for i, model in enumerate(models, 1):
+    print(f"{i}. {model}")
+
+# Average scores
+avg_score = score1 + score2
+print(f"\nAverage score: {avg_score}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 8: Abstract Base Classes -->
+        <section id="abstract-classes" class="section">
+            <div class="card">
+                <h2><i class="fas fa-layer-group"></i> 8. Abstract Base Classes</h2>
+                <p>Abstract Base Classes (ABCs) define interfaces that subclasses must implement, ensuring consistent APIs across different implementations.</p>
+
+                <pre><code class="language-python">from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Optional
+
+class BaseTransformer(ABC):
+    """Abstract base class for all data transformers."""
+    
+    def __init__(self, name: str):
+        self.name = name
+        self.is_fitted = False
+    
+    @abstractmethod
+    def fit(self, X, y=None):
+        """Fit the transformer to data."""
+        pass
+    
+    @abstractmethod
+    def transform(self, X):
+        """Transform the data."""
+        pass
+    
+    def fit_transform(self, X, y=None):
+        """Fit and transform in one step."""
+        return self.fit(X, y).transform(X)
+    
+    @abstractmethod
+    def get_params(self) -> Dict[str, Any]:
+        """Get transformer parameters."""
+        pass
+    
+    def __str__(self):
+        return f"{self.__class__.__name__}(name='{self.name}')"
+
+class BaseEstimator(ABC):
+    """Abstract base class for all estimators/models."""
+    
+    def __init__(self, name: str):
+        self.name = name
+        self.is_fitted = False
+    
+    @abstractmethod
+    def fit(self, X, y):
+        """Fit the estimator to training data."""
+        pass
+    
+    @abstractmethod
+    def predict(self, X):
+        """Make predictions on new data."""
+        pass
+    
+    @abstractmethod
+    def score(self, X, y) -> float:
+        """Calculate model performance score."""
+        pass
+    
+    @abstractmethod
+    def get_params(self) -> Dict[str, Any]:
+        """Get model parameters."""
+        pass
+    
+    @abstractmethod
+    def set_params(self, **params):
+        """Set model parameters."""
+        pass
+
+# Concrete implementations
+class StandardScaler(BaseTransformer):
+    """Standard scaler implementation."""
+    
+    def __init__(self):
+        super().__init__("StandardScaler")
+        self.mean_ = None
+        self.std_ = None
+    
+    def fit(self, X, y=None):
+        """Calculate mean and standard deviation."""
+        import numpy as np
+        X = np.array(X)
+        self.mean_ = np.mean(X, axis=0)
+        self.std_ = np.std(X, axis=0)
+        self.is_fitted = True
+        return self
+    
+    def transform(self, X):
+        """Standardize features."""
+        if not self.is_fitted:
+            raise ValueError("Transformer must be fitted before transform")
+        
+        import numpy as np
+        X = np.array(X)
+        return (X - self.mean_) / (self.std_ + 1e-8)  # Add small value to avoid division by zero
+    
+    def get_params(self):
+        return {
+            'fitted': self.is_fitted,
+            'mean': self.mean_.tolist() if self.mean_ is not None else None,
+            'std': self.std_.tolist() if self.std_ is not None else None
+        }
+
+class LogisticRegressionEstimator(BaseEstimator):
+    """Logistic regression implementation."""
+    
+    def __init__(self, learning_rate=0.01, max_iterations=1000):
+        super().__init__("LogisticRegression")
+        self.learning_rate = learning_rate
+        self.max_iterations = max_iterations
+        self.weights = None
+        self.bias = None
+    
+    def fit(self, X, y):
+        """Train logistic regression model."""
+        import numpy as np
+        X = np.array(X)
+        y = np.array(y)
+        
+        # Initialize parameters
+        self.weights = np.random.normal(0, 0.01, X.shape[1])
+        self.bias = 0
+        
+        # Simplified training (just for demonstration)
+        for _ in range(min(10, self.max_iterations)):  # Simplified
+            # Simulate gradient descent step
+            self.weights *= 0.99
+            self.bias *= 0.99
+        
+        self.is_fitted = True
+        return self
+    
+    def predict(self, X):
+        """Make binary predictions."""
+        probabilities = self.predict_proba(X)
+        return [1 if p > 0.5 else 0 for p in probabilities]
+    
+    def predict_proba(self, X):
+        """Predict class probabilities."""
+        if not self.is_fitted:
+            raise ValueError("Model must be fitted before prediction")
+        
+        import numpy as np
+        X = np.array(X)
+        linear_output = np.dot(X, self.weights) + self.bias
+        # Sigmoid function
+        probabilities = 1 / (1 + np.exp(-linear_output))
+        return probabilities.tolist()
+    
+    def score(self, X, y):
+        """Calculate accuracy score."""
+        predictions = self.predict(X)
+        correct = sum(1 for true, pred in zip(y, predictions) if true == pred)
+        return correct / len(y)
+    
+    def get_params(self):
+        return {
+            'learning_rate': self.learning_rate,
+            'max_iterations': self.max_iterations,
+            'is_fitted': self.is_fitted
+        }
+    
+    def set_params(self, **params):
+        for param, value in params.items():
+            if hasattr(self, param):
+                setattr(self, param, value)
+        return self
+
+# Using the abstract interfaces
+def create_pipeline(transformers: List[BaseTransformer], 
+                   estimator: BaseEstimator):
+    """Create a pipeline with any transformers and estimator."""
+    
+    class Pipeline:
+        def __init__(self, transformers, estimator):
+            self.transformers = transformers
+            self.estimator = estimator
+        
+        def fit(self, X, y):
+            """Fit all transformers and estimator."""
+            current_X = X
+            
+            # Fit and transform with each transformer
+            for transformer in self.transformers:
+                current_X = transformer.fit_transform(current_X)
+            
+            # Fit the estimator
+            self.estimator.fit(current_X, y)
+            return self
+        
+        def predict(self, X):
+            """Make predictions using the full pipeline."""
+            current_X = X
+            
+            # Transform with each transformer
+            for transformer in self.transformers:
+                current_X = transformer.transform(current_X)
+            
+            # Predict with estimator
+            return self.estimator.predict(current_X)
+        
+        def score(self, X, y):
+            """Calculate pipeline performance."""
+            predictions = self.predict(X)
+            return self.estimator.score(X, y)
+    
+    return Pipeline(transformers, estimator)
+
+# Usage example
+import numpy as np
+
+# Generate sample data
+np.random.seed(42)
+X = np.random.random((100, 4))
+y = np.random.randint(0, 2, 100)
+
+# Create pipeline with different transformers
+scaler = StandardScaler()
+model = LogisticRegressionEstimator(learning_rate=0.05)
+
+pipeline = create_pipeline([scaler], model)
+
+# Train and evaluate
+pipeline.fit(X, y)
+predictions = pipeline.predict(X)
+accuracy = pipeline.score(X, y)
+
+print(f"Pipeline accuracy: {accuracy:.3f}")
+
+# All components follow the same interface
+print(f"Scaler: {scaler.get_params()}")
+print(f"Model: {model.get_params()}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Important Note</h4>
+                    <p>Abstract classes cannot be instantiated directly. They serve as contracts that concrete classes must fulfill. This ensures consistent interfaces across different implementations, making your code more maintainable and interchangeable.</p>
+                </div>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 9: Design Patterns -->
+        <section id="design-patterns" class="section">
+            <div class="card">
+                <h2><i class="fas fa-puzzle-piece"></i> 9. Design Patterns for Data Science</h2>
+                <p>Design patterns are reusable solutions to common problems in software design. Here are key patterns useful in data science applications.</p>
+
+                <h3>Strategy Pattern for Model Selection</h3>
+                <pre><code class="language-python">class ModelStrategy(ABC):
+    """Strategy interface for different modeling approaches."""
+    
+    @abstractmethod
+    def train(self, X, y):
+        """Train the model."""
+        pass
+    
+    @abstractmethod
+    def predict(self, X):
+        """Make predictions."""
+        pass
+    
+    @abstractmethod
+    def get_name(self):
+        """Get strategy name."""
+        pass
+
+class RandomForestStrategy(ModelStrategy):
+    """Random Forest modeling strategy."""
+    
+    def __init__(self, n_estimators=100):
+        self.n_estimators = n_estimators
+        self.model = None
+    
+    def train(self, X, y):
+        """Train Random Forest model."""
+        print(f"Training Random Forest with {self.n_estimators} trees")
+        # Simulate training
+        self.model = f"RF_model_{self.n_estimators}_trees"
+        return self
+    
+    def predict(self, X):
+        """Make Random Forest predictions."""
+        if not self.model:
+            raise ValueError("Model not trained")
+        return [1, 0, 1, 0]  # Simulated predictions
+    
+    def get_name(self):
+        return f"Random Forest ({self.n_estimators} trees)"
+
+class XGBoostStrategy(ModelStrategy):
+    """XGBoost modeling strategy."""
+    
+    def __init__(self, max_depth=6, learning_rate=0.1):
+        self.max_depth = max_depth
+        self.learning_rate = learning_rate
+        self.model = None
+    
+    def train(self, X, y):
+        """Train XGBoost model."""
+        print(f"Training XGBoost (depth={self.max_depth}, lr={self.learning_rate})")
+        self.model = f"XGB_model_{self.max_depth}_{self.learning_rate}"
+        return self
+    
+    def predict(self, X):
+        """Make XGBoost predictions."""
+        if not self.model:
+            raise ValueError("Model not trained")
+        return [0, 1, 0, 1]  # Simulated predictions
+    
+    def get_name(self):
+        return f"XGBoost (depth={self.max_depth}, lr={self.learning_rate})"
+
+class ModelContext:
+    """Context class that uses different modeling strategies."""
+    
+    def __init__(self, strategy: ModelStrategy = None):
+        self._strategy = strategy
+    
+    def set_strategy(self, strategy: ModelStrategy):
+        """Change the modeling strategy at runtime."""
+        self._strategy = strategy
+    
+    def train_model(self, X, y):
+        """Train using current strategy."""
+        if not self._strategy:
+            raise ValueError("No strategy set")
+        return self._strategy.train(X, y)
+    
+    def make_predictions(self, X):
+        """Make predictions using current strategy."""
+        if not self._strategy:
+            raise ValueError("No strategy set")
+        return self._strategy.predict(X)
+    
+    def get_model_info(self):
+        """Get information about current strategy."""
+        if not self._strategy:
+            return "No strategy set"
+        return self._strategy.get_name()
+
+# Usage example
+training_data = [[1, 2], [3, 4], [5, 6], [7, 8]]
+training_labels = [0, 1, 0, 1]
+test_data = [[2, 3], [4, 5]]
+
+# Create context with initial strategy
+context = ModelContext(RandomForestStrategy(n_estimators=50))
+
+print(f"Current model: {context.get_model_info()}")
+context.train_model(training_data, training_labels)
+rf_predictions = context.make_predictions(test_data)
+print(f"RF Predictions: {rf_predictions}")
+
+# Switch strategy at runtime
+context.set_strategy(XGBoostStrategy(max_depth=4, learning_rate=0.05))
+print(f"\nSwitched to: {context.get_model_info()}")
+context.train_model(training_data, training_labels)
+xgb_predictions = context.make_predictions(test_data)
+print(f"XGB Predictions: {xgb_predictions}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <h3>Observer Pattern for Model Monitoring</h3>
+                <pre><code class="language-python">class ModelObserver(ABC):
+    """Observer interface for model monitoring."""
+    
+    @abstractmethod
+    def update(self, model, event, data):
+        """Handle model events."""
+        pass
+
+class PerformanceMonitor(ModelObserver):
+    """Monitors model performance metrics."""
+    
+    def __init__(self):
+        self.performance_history = []
+    
+    def update(self, model, event, data):
+        """Record performance metrics."""
+        if event == "prediction":
+            accuracy = data.get('accuracy', 0)
+            self.performance_history.append({
+                'model': model.name,
+                'timestamp': data.get('timestamp', 'now'),
+                'accuracy': accuracy
+            })
+            
+            if accuracy < 0.8:
+                print(f"⚠️  Performance Alert: {model.name} accuracy dropped to {accuracy:.3f}")
+
+class DataDriftDetector(ModelObserver):
+    """Detects data drift in model inputs."""
+    
+    def __init__(self):
+        self.drift_alerts = []
+        self.baseline_stats = None
+    
+    def update(self, model, event, data):
+        """Check for data drift."""
+        if event == "prediction":
+            current_stats = data.get('input_stats', {})
+            
+            if self.baseline_stats is None:
+                self.baseline_stats = current_stats
+                print(f"📊 Baseline established for {model.name}")
+            else:
+                # Simplified drift detection
+                drift_detected = False
+                for feature, value in current_stats.items():
+                    baseline_value = self.baseline_stats.get(feature, value)
+                    if abs(value - baseline_value) > 0.1:  # Threshold
+                        drift_detected = True
+                        break
+                
+                if drift_detected:
+                    alert = {
+                        'model': model.name,
+                        'timestamp': data.get('timestamp', 'now'),
+                        'current_stats': current_stats,
+                        'baseline_stats': self.baseline_stats
+                    }
+                    self.drift_alerts.append(alert)
+                    print(f"🚨 Data Drift Alert: {model.name}")
+
+class ModelLogger(ModelObserver):
+    """Logs all model activities."""
+    
+    def __init__(self):
+        self.logs = []
+    
+    def update(self, model, event, data):
+        """Log all model events."""
+        log_entry = {
+            'model': model.name,
+            'event': event,
+            'timestamp': data.get('timestamp', 'now'),
+            'data': data
+        }
+        self.logs.append(log_entry)
+        print(f"📝 Log: {model.name} - {event}")
+
+class ObservableModel:
+    """Model that can be observed by multiple observers."""
+    
+    def __init__(self, name):
+        self.name = name
+        self._observers = []
+        self.is_trained = False
+    
+    def attach(self, observer: ModelObserver):
+        """Add an observer."""
+        self._observers.append(observer)
+    
+    def detach(self, observer: ModelObserver):
+        """Remove an observer."""
+        self._observers.remove(observer)
+    
+    def notify(self, event, data):
+        """Notify all observers of an event."""
+        for observer in self._observers:
+            observer.update(self, event, data)
+    
+    def train(self, X, y):
+        """Train the model and notify observers."""
+        print(f"Training {self.name}...")
+        self.is_trained = True
+        
+        self.notify("training", {
+            'samples': len(X),
+            'features': len(X[0]) if X else 0,
+            'timestamp': 'now'
+        })
+    
+    def predict(self, X, y_true=None):
+        """Make predictions and notify observers."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained first")
+        
+        # Simulated predictions and metrics
+        predictions = [1, 0] * (len(X) // 2) + [1] * (len(X) % 2)
+        
+        # Calculate accuracy if true labels provided
+        accuracy = None
+        if y_true:
+            correct = sum(1 for p, t in zip(predictions, y_true) if p == t)
+            accuracy = correct / len(y_true)
+        
+        # Simulate input statistics
+        input_stats = {
+            'mean_feature_0': sum(x[0] for x in X) / len(X) if X and X[0] else 0,
+            'mean_feature_1': sum(x[1] for x in X) / len(X) if X and len(X[0]) > 1 else 0
+        }
+        
+        self.notify("prediction", {
+            'predictions': predictions,
+            'accuracy': accuracy,
+            'input_stats': input_stats,
+            'timestamp': 'now'
+        })
+        
+        return predictions
+
+# Usage example
+model = ObservableModel("Customer Churn Predictor")
+
+# Attach observers
+perf_monitor = PerformanceMonitor()
+drift_detector = DataDriftDetector()
+logger = ModelLogger()
+
+model.attach(perf_monitor)
+model.attach(drift_detector)
+model.attach(logger)
+
+# Train and predict - observers will be notified
+training_data = [[1, 2], [4, 5], [7, 8]]
+training_labels = [0, 1, 0]
+
+model.train(training_data, training_labels)
+
+test_data = [[2, 3], [5, 6]]
+test_labels = [1, 0]
+predictions = model.predict(test_data, test_labels)
+
+print(f"\nPredictions: {predictions}")
+print(f"Performance history: {len(perf_monitor.performance_history)} entries")
+print(f"Drift alerts: {len(drift_detector.drift_alerts)} alerts")
+print(f"Log entries: {len(logger.logs)} entries")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 10: Testing and Quality Assurance -->
+        <section id="testing" class="section">
+            <div class="card">
+                <h2><i class="fas fa-vial"></i> 10. Testing OOP Code</h2>
+                <p>Testing is crucial for maintaining reliable data science code. Here's how to test OOP components effectively.</p>
+
+                <pre><code class="language-python">"""
+Testing Examples for Data Science OOP Code
+tests/test_models.py
+"""
+
+import unittest
+import pandas as pd
+import numpy as np
+from unittest.mock import Mock, patch
+import pytest
+
+# Assuming our classes are in src module
+from src.models.base import BaseModel
+from src.data.preprocessing import DataProcessor, DataProcessorConfig
+from src.pipeline.training import MLPipeline, ExperimentConfig
+
+class TestDataProcessor(unittest.TestCase):
+    """Test cases for DataProcessor class."""
+    
+    def setUp(self):
+        """Set up test fixtures before each test method."""
+        self.config = DataProcessorConfig(
+            remove_outliers=True,
+            handle_missing='mean',
+            normalize=True
+        )
+        self.processor = DataProcessor(self.config)
+        
+        # Create test data
+        self.test_data = pd.DataFrame({
+            'feature1': [1, 2, 3, 100, 5],  # Contains outlier
+            'feature2': [10, 20, np.nan, 40, 50],  # Contains missing value
+            'feature3': [0.1, 0.2, 0.3, 0.4, 0.5]
+        })
+    
+    def test_initialization(self):
+        """Test processor initialization."""
+        self.assertFalse(self.processor.is_fitted)
+        self.assertEqual(self.processor.config.handle_missing, 'mean')
+        self.assertTrue(self.processor.config.remove_outliers)
+    
+    def test_fit_sets_fitted_flag(self):
+        """Test that fit method sets is_fitted flag."""
+        self.processor.fit(self.test_data)
+        self.assertTrue(self.processor.is_fitted)
+    
+    def test_fit_computes_statistics(self):
+        """Test that fit method computes necessary statistics."""
+        self.processor.fit(self.test_data)
+        
+        # Check that statistics are computed
+        self.assertIn('means', self.processor.statistics)
+        self.assertIn('outlier_bounds', self.processor.statistics)
+        self.assertIn('normalization', self.processor.statistics)
+    
+    def test_transform_without_fit_raises_error(self):
+        """Test that transform raises error when not fitted."""
+        with self.assertRaises(ValueError) as context:
+            self.processor.transform(self.test_data)
+        
+        self.assertIn("must be fitted", str(context.exception))
+    
+    def test_transform_handles_missing_values(self):
+        """Test that transform handles missing values correctly."""
+        self.processor.fit(self.test_data)
+        transformed = self.processor.transform(self.test_data)
+        
+        # Check that no missing values remain
+        self.assertFalse(transformed.isnull().any().any())
+    
+    def test_fit_transform_consistency(self):
+        """Test that fit_transform gives same result as fit().transform()."""
+        # Method 1: fit then transform
+        self.processor.fit(self.test_data)
+        result1 = self.processor.transform(self.test_data)
+        
+        # Method 2: fit_transform
+        processor2 = DataProcessor(self.config)
+        result2 = processor2.fit_transform(self.test_data)
+        
+        # Results should be identical
+        pd.testing.assert_frame_equal(result1, result2)
+    
+    def test_invalid_input_raises_error(self):
+        """Test that invalid input raises appropriate errors."""
+        # Test with non-DataFrame
+        with self.assertRaises(ValueError):
+            self.processor.fit("not a dataframe")
+        
+        # Test with empty DataFrame
+        empty_df = pd.DataFrame()
+        with self.assertRaises(ValueError):
+            self.processor.fit(empty_df)
+    
+    def test_get_feature_names_out(self):
+        """Test feature names output."""
+        self.processor.fit(self.test_data)
+        feature_names = self.processor.get_feature_names_out()
+        
+        self.assertEqual(feature_names, list(self.test_data.columns))
+
+class TestBaseModel(unittest.TestCase):
+    """Test cases for BaseModel abstract class."""
+    
+    def test_cannot_instantiate_abstract_class(self):
+        """Test that BaseModel cannot be instantiated directly."""
+        with self.assertRaises(TypeError):
+            BaseModel("test")
+
+class TestMLPipeline(unittest.TestCase):
+    """Test cases for MLPipeline class."""
+    
+    def setUp(self):
+        """Set up test fixtures."""
+        self.config = ExperimentConfig(
+            experiment_name="test_experiment",
+            data_path="test_data.csv",
+            target_column="target",
+            model_type="classification",
+            model_params={'rf': {'n_estimators': 10}},
+            preprocessing_params={}
+        )
+        self.pipeline = MLPipeline(self.config)
+    
+    @patch('src.pipeline.training.DataIngestion')
+    def test_pipeline_initialization(self, mock_ingestion):
+        """Test pipeline initialization with mocked dependencies."""
+        # Pipeline should initialize without errors
+        self.assertEqual(self.pipeline.config.experiment_name, "test_experiment")
+        self.assertIsNotNone(self.pipeline.data_ingestion)
+    
+    def test_create_interaction_features(self):
+        """Test interaction feature creation."""
+        test_df = pd.DataFrame({
+            'A': [1, 2, 3],
+            'B': [4, 5, 6],
+            'C': ['x', 'y', 'z']  # Non-numeric column
+        })
+        
+        result = self.pipeline._create_interaction_features(test_df)
+        
+        # Should have original columns plus interaction
+        self.assertIn('A_B_interaction', result.columns)
+        # Check interaction values
+        expected_interaction = test_df['A'] * test_df['B']
+        pd.testing.assert_series_equal(
+            result['A_B_interaction'], 
+            expected_interaction, 
+            check_names=False
+        )
+
+# Pytest examples (more modern testing approach)
+class TestDataProcessorPytest:
+    """Pytest-style tests for DataProcessor."""
+    
+    @pytest.fixture
+    def processor_config(self):
+        """Fixture providing processor configuration."""
+        return DataProcessorConfig(
+            remove_outliers=True,
+            handle_missing='mean',
+            normalize=True
+        )
+    
+    @pytest.fixture
+    def sample_data(self):
+        """Fixture providing sample data."""
+        return pd.DataFrame({
+            'feature1': [1, 2, 3, 100, 5],
+            'feature2': [10, 20, np.nan, 40, 50],
+            'feature3': [0.1, 0.2, 0.3, 0.4, 0.5]
+        })
+    
+    def test_processor_fit(self, processor_config, sample_data):
+        """Test processor fitting."""
+        processor = DataProcessor(processor_config)
+        processor.fit(sample_data)
+        
+        assert processor.is_fitted
+        assert 'means' in processor.statistics
+    
+    @pytest.mark.parametrize("missing_strategy", ['mean', 'median'])
+    def test_different_missing_strategies(self, missing_strategy, sample_data):
+        """Test different missing value strategies."""
+        config = DataProcessorConfig(handle_missing=missing_strategy)
+        processor = DataProcessor(config)
+        
+        result = processor.fit_transform(sample_data)
+        assert not result.isnull().any().any()
+    
+    def test_processor_with_no_numeric_columns(self, processor_config):
+        """Test processor behavior with non-numeric data."""
+        text_data = pd.DataFrame({
+            'category1': ['A', 'B', 'C'],
+            'category2': ['X', 'Y', 'Z']
+        })
+        
+        processor = DataProcessor(processor_config)
+        processor.fit(text_data)
+        result = processor.transform(text_data)
+        
+        # Should not fail and return original data
+        pd.testing.assert_frame_equal(result, text_data)
+
+# Integration tests
+class TestIntegration(unittest.TestCase):
+    """Integration tests for multiple components."""
+    
+    def test_full_pipeline_integration(self):
+        """Test that all components work together."""
+        # Create synthetic data
+        np.random.seed(42)
+        data = pd.DataFrame({
+            'feature1': np.random.normal(0, 1, 100),
+            'feature2': np.random.normal(0, 1, 100),
+            'target': np.random.randint(0, 2, 100)
+        })
+        
+        # Add some missing values
+        data.loc[data.index[:5], 'feature1'] = np.nan
+        
+        # Save to temporary file
+        temp_file = 'temp_test_data.csv'
+        data.to_csv(temp_file, index=False)
+        
+        try:
+            # Configure pipeline
+            config = ExperimentConfig(
+                experiment_name="integration_test",
+                data_path=temp_file,
+                target_column="target",
+                model_type="classification",
+                model_params={
+                    'rf': {'n_estimators': 10, 'random_state': 42}
+                },
+                preprocessing_params={}
+            )
+            
+            # This would run the full pipeline
+            # pipeline = MLPipeline(config)
+            # results = pipeline.run_experiment()
+            
+            # For now, just test that configuration works
+            self.assertEqual(config.experiment_name, "integration_test")
+            
+        finally:
+            # Clean up temporary file
+            import os
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
+
+# Performance tests
+class TestPerformance(unittest.TestCase):
+    """Performance tests for data processing."""
+    
+    def test_large_dataset_processing(self):
+        """Test processor performance with large dataset."""
+        import time
+        
+        # Create large dataset
+        large_data = pd.DataFrame({
+            f'feature_{i}': np.random.random(10000)
+            for i in range(50)
+        })
+        
+        config = DataProcessorConfig(normalize=True)
+        processor = DataProcessor(config)
+        
+        start_time = time.time()
+        processor.fit_transform(large_data)
+        processing_time = time.time() - start_time
+        
+        # Should process in reasonable time (adjust threshold as needed)
+        self.assertLess(processing_time, 5.0, "Processing took too long")
+
+# Test runner
+if __name__ == '__main__':
+    # Run unittest tests
+    unittest.main(verbosity=2)
+    
+    # To run pytest tests, use: pytest test_models.py -v
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+
+                <div class="best-practice">
+                    <h4><i class="fas fa-check-circle"></i> Testing Best Practices</h4>
+                    <ul>
+                        <li><strong>Test Structure:</strong> Use AAA pattern (Arrange, Act, Assert)</li>
+                        <li><strong>Mock Dependencies:</strong> Isolate units by mocking external dependencies</li>
+                        <li><strong>Edge Cases:</strong> Test boundary conditions and error scenarios</li>
+                        <li><strong>Fixtures:</strong> Use setup methods or fixtures for common test data</li>
+                        <li><strong>Parameterized Tests:</strong> Test multiple scenarios efficiently</li>
+                        <li><strong>Integration Tests:</strong> Test component interactions</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 11: Best Practices -->
+        <section id="best-practices" class="section">
+            <div class="card">
+                <h2><i class="fas fa-star"></i> 11. Best Practices for Data Science OOP</h2>
+
+                <div class="grid grid-2">
+                    <div class="best-practice">
+                        <h4><i class="fas fa-check-circle"></i> Do's</h4>
+                        <ul>
+                            <li><strong>Single Responsibility:</strong> Each class should have one reason to change</li>
+                            <li><strong>Clear Naming:</strong> Use descriptive class and method names</li>
+                            <li><strong>Documentation:</strong> Write comprehensive docstrings</li>
+                            <li><strong>Type Hints:</strong> Use type annotations for clarity</li>
+                            <li><strong>Error Handling:</strong> Implement proper exception handling</li>
+                            <li><strong>Testing:</strong> Write unit tests for all classes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="error-box">
+                        <h4><i class="fas fa-times-circle"></i> Don'ts</h4>
+                        <ul>
+                            <li><strong>God Classes:</strong> Avoid classes that do everything</li>
+                            <li><strong>Deep Inheritance:</strong> Keep inheritance hierarchies shallow</li>
+                            <li><strong>Tight Coupling:</strong> Minimize dependencies between classes</li>
+                            <li><strong>Premature Optimization:</strong> Focus on clarity first</li>
+                            <li><strong>Magic Numbers:</strong> Use named constants instead</li>
+                            <li><strong>Silent Failures:</strong> Always handle errors explicitly</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Example: Well-Designed Data Science Class</h3>
+                <pre><code class="language-python">from typing import Optional, Dict, Any, List
+import pandas as pd
+import numpy as np
+from abc import ABC, abstractmethod
+
+class DataProcessorConfig:
+    """Configuration class for DataProcessor."""
+    
+    def __init__(self, 
+                 remove_outliers: bool = True,
+                 outlier_method: str = 'iqr',
+                 handle_missing: str = 'mean',
+                 normalize: bool = True):
+        self.remove_outliers = remove_outliers
+        self.outlier_method = outlier_method
+        self.handle_missing = handle_missing
+        self.normalize = normalize
+
+class DataProcessor:
+    """
+    A comprehensive data processor for machine learning pipelines.
+    
+    This class handles common data preprocessing tasks including
+    outlier removal, missing value imputation, and normalization.
+    
+    Attributes:
+        config: Configuration settings for processing
+        is_fitted: Whether the processor has been fitted to data
+        statistics: Computed statistics from training data
+    
+    Example:
+        >>> config = DataProcessorConfig(remove_outliers=True)
+        >>> processor = DataProcessor(config)
+        >>> processor.fit(X_train)
+        >>> X_clean = processor.transform(X_test)
+    """
+    
+    def __init__(self, config: DataProcessorConfig):
+        self.config = config
+        self.is_fitted = False
+        self.statistics: Dict[str, Any] = {}
+        self._fitted_columns: Optional[List[str]] = None
+    
+    def fit(self, X: pd.DataFrame, y: Optional[pd.Series] = None) -> 'DataProcessor':
+        """
+        Fit the processor to training data.
+        
+        Args:
+            X: Training features
+            y: Training target (optional)
+            
+        Returns:
+            Self for method chaining
+            
+        Raises:
+            ValueError: If input data is invalid
+        """
+        self._validate_input(X)
+        
+        self._fitted_columns = X.columns.tolist()
+        
+        # Compute statistics for each processing step
+        if self.config.handle_missing == 'mean':
+            self.statistics['means'] = X.select_dtypes(include=[np.number]).mean().to_dict()
+        elif self.config.handle_missing == 'median':
+            self.statistics['medians'] = X.select_dtypes(include=[np.number]).median().to_dict()
+        
+        if self.config.remove_outliers and self.config.outlier_method == 'iqr':
+            numeric_cols = X.select_dtypes(include=[np.number]).columns
+            self.statistics['outlier_bounds'] = {}
+            
+            for col in numeric_cols:
+                Q1 = X[col].quantile(0.25)
+                Q3 = X[col].quantile(0.75)
+                IQR = Q3 - Q1
+                lower_bound = Q1 - 1.5 * IQR
+                upper_bound = Q3 + 1.5 * IQR
+                self.statistics['outlier_bounds'][col] = (lower_bound, upper_bound)
+        
+        if self.config.normalize:
+            numeric_cols = X.select_dtypes(include=[np.number]).columns
+            self.statistics['normalization'] = {
+                'means': X[numeric_cols].mean().to_dict(),
+                'stds': X[numeric_cols].std().to_dict()
+            }
+        
+        self.is_fitted = True
+        return self
+    
+    def transform(self, X: pd.DataFrame) -> pd.DataFrame:
+        """
+        Transform data using fitted parameters.
+        
+        Args:
+            X: Data to transform
+            
+        Returns:
+            Transformed data
+            
+        Raises:
+            ValueError: If processor not fitted or invalid input
+        """
+        if not self.is_fitted:
+            raise ValueError("Processor must be fitted before transform")
+        
+        self._validate_input(X)
+        self._validate_columns(X)
+        
+        X_transformed = X.copy()
+        
+        # Handle missing values
+        if self.config.handle_missing in ['mean', 'median']:
+            stat_key = f"{self.config.handle_missing}s"
+            fill_values = self.statistics.get(stat_key, {})
+            
+            for col, value in fill_values.items():
+                if col in X_transformed.columns:
+                    X_transformed[col].fillna(value, inplace=True)
+        
+        # Remove outliers
+        if self.config.remove_outliers:
+            outlier_bounds = self.statistics.get('outlier_bounds', {})
+            
+            for col, (lower, upper) in outlier_bounds.items():
+                if col in X_transformed.columns:
+                    mask = (X_transformed[col] >= lower) & (X_transformed[col] <= upper)
+                    X_transformed = X_transformed[mask]
+        
+        # Normalize
+        if self.config.normalize:
+            norm_stats = self.statistics.get('normalization', {})
+            means = norm_stats.get('means', {})
+            stds = norm_stats.get('stds', {})
+            
+            for col in means:
+                if col in X_transformed.columns and stds.get(col, 0) != 0:
+                    X_transformed[col] = (X_transformed[col] - means[col]) / stds[col]
+        
+        return X_transformed
+    
+    def fit_transform(self, X: pd.DataFrame, y: Optional[pd.Series] = None) -> pd.DataFrame:
+        """Fit and transform in one step."""
+        return self.fit(X, y).transform(X)
+    
+    def _validate_input(self, X: pd.DataFrame) -> None:
+        """Validate input data."""
+        if not isinstance(X, pd.DataFrame):
+            raise ValueError("Input must be a pandas DataFrame")
+        
+        if X.empty:
+            raise ValueError("Input DataFrame cannot be empty")
+    
+    def _validate_columns(self, X: pd.DataFrame) -> None:
+        """Validate that input has expected columns."""
+        if self._fitted_columns is not None:
+            missing_cols = set(self._fitted_columns) - set(X.columns)
+            if missing_cols:
+                raise ValueError(f"Missing columns: {missing_cols}")
+    
+    def get_feature_names_out(self) -> List[str]:
+        """Get output feature names."""
+        if not self.is_fitted:
+            raise ValueError("Processor must be fitted first")
+        return self._fitted_columns.copy()
+    
+    def get_statistics(self) -> Dict[str, Any]:
+        """Get computed statistics."""
+        return self.statistics.copy()
+
+# Usage example demonstrating best practices
+if __name__ == "__main__":
+    # Create sample data
+    data = pd.DataFrame({
+        'feature1': [1, 2, 3, 100, 5, 6, 7, 8, 9, 10],  # Contains outlier
+        'feature2': [10, 20, np.nan, 40, 50, 60, 70, 80, 90, 100],  # Contains missing
+        'feature3': [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    })
+    
+    # Configure and use processor
+    config = DataProcessorConfig(
+        remove_outliers=True,
+        outlier_method='iqr',
+        handle_missing='mean',
+        normalize=True
+    )
+    
+    processor = DataProcessor(config)
+    
+    try:
+        # Fit and transform
+        processed_data = processor.fit_transform(data)
+        
+        print("Original data shape:", data.shape)
+        print("Processed data shape:", processed_data.shape)
+        print("Statistics:", processor.get_statistics())
+        
+    except ValueError as e:
+        print(f"Error: {e}")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Section 12: Complete ML Project Structure -->
+        <section id="project-structure" class="section">
+            <div class="card">
+                <h2><i class="fas fa-sitemap"></i> 12. Complete ML Project Structure</h2>
+                <p>Here's how to organize a real data science project using OOP principles:</p>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-folder"></i> Recommended Project Structure</h4>
+                    <pre style="background: var(--code-bg); padding: 1rem; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+ml_project/
+├── data/
+│   ├── raw/                    # Raw data files
+│   ├── processed/              # Cleaned data
+│   └── features/               # Feature sets
+├── src/
+│   ├── __init__.py
+│   ├── data/
+│   │   ├── __init__.py
+│   │   ├── ingestion.py        # DataIngestion class
+│   │   ├── validation.py       # DataValidator class
+│   │   └── preprocessing.py    # DataProcessor class
+│   ├── features/
+│   │   ├── __init__.py
+│   │   ├── base.py            # BaseTransformer ABC
+│   │   ├── engineering.py     # FeatureEngineer class
+│   │   └── selection.py       # FeatureSelector class
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── base.py            # BaseModel ABC
+│   │   ├── linear.py          # LinearModels
+│   │   ├── ensemble.py        # EnsembleModels
+│   │   └── neural.py          # NeuralNetworks
+│   ├── evaluation/
+│   │   ├── __init__.py
+│   │   ├── metrics.py         # ModelEvaluator class
+│   │   └── visualization.py   # ResultsVisualizer class
+│   ├── pipeline/
+│   │   ├── __init__.py
+│   │   ├── training.py        # TrainingPipeline class
+│   │   └── inference.py       # InferencePipeline class
+│   └── utils/
+│       ├── __init__.py
+│       ├── config.py          # Configuration classes
+│       └── logging.py         # Logging utilities
+├── tests/
+│   ├── test_data/
+│   ├── test_features/
+│   ├── test_models/
+│   └── test_pipeline/
+├── configs/
+│   ├── model_config.yaml      # Model configurations
+│   ├── data_config.yaml       # Data pipeline configs
+│   └── experiment_config.yaml # Experiment settings
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   └── 03_model_experiments.ipynb
+├── scripts/
+│   ├── train_model.py         # Training script
+│   ├── evaluate_model.py      # Evaluation script
+│   └── predict.py             # Prediction script
+├── requirements.txt
+└── setup.py
+                    </pre>
+                </div>
+
+                <h3>Example Production Pipeline</h3>
+                <pre><code class="language-python">"""
+Complete ML Pipeline Example
+src/pipeline/training.py
+"""
+
+from typing import Dict, Any, Optional, List
+import pandas as pd
+import numpy as np
+from dataclasses import dataclass
+import joblib
+import yaml
+
+@dataclass
+class ExperimentConfig:
+    """Configuration for ML experiments."""
+    experiment_name: str
+    data_path: str
+    target_column: str
+    model_type: str
+    model_params: Dict[str, Any]
+    preprocessing_params: Dict[str, Any]
+    validation_split: float = 0.2
+    random_state: int = 42
+
+class DataIngestion:
+    """Handles data loading from various sources."""
+    
+    def __init__(self, config: Dict[str, Any]):
+        self.config = config
+    
+    def load_data(self, path: str) -> pd.DataFrame:
+        """Load data from file."""
+        if path.endswith('.csv'):
+            return pd.read_csv(path)
+        elif path.endswith('.parquet'):
+            return pd.read_parquet(path)
+        else:
+            raise ValueError(f"Unsupported file format: {path}")
+
+class DataValidator:
+    """Validates data quality and schema."""
+    
+    def __init__(self, required_columns: List[str]):
+        self.required_columns = required_columns
+    
+    def validate_schema(self, data: pd.DataFrame) -> bool:
+        """Validate data schema."""
+        missing_cols = set(self.required_columns) - set(data.columns)
+        if missing_cols:
+            raise ValueError(f"Missing required columns: {missing_cols}")
+        return True
+    
+    def validate_quality(self, data: pd.DataFrame, max_missing_pct: float = 0.5) -> bool:
+        """Validate data quality."""
+        missing_pct = data.isnull().sum().sum() / (data.shape[0] * data.shape[1])
+        if missing_pct > max_missing_pct:
+            raise ValueError(f"Too much missing data: {missing_pct:.1%}")
+        return True
+
+class FeatureEngineer:
+    """Creates and transforms features."""
+    
+    def __init__(self, config: Dict[str, Any]):
+        self.config = config
+        self.transformations = {}
+    
+    def add_transformation(self, name: str, func):
+        """Add a feature transformation."""
+        self.transformations[name] = func
+    
+    def create_features(self, data: pd.DataFrame) -> pd.DataFrame:
+        """Apply all feature transformations."""
+        result = data.copy()
+        
+        for name, func in self.transformations.items():
+            print(f"Applying transformation: {name}")
+            result = func(result)
+        
+        return result
+
+class ModelManager:
+    """Manages model training and evaluation."""
+    
+    def __init__(self):
+        self.models = {}
+        self.results = {}
+    
+    def register_model(self, name: str, model):
+        """Register a model for training."""
+        self.models[name] = model
+    
+    def train_model(self, name: str, X: pd.DataFrame, y: pd.Series) -> Dict[str, Any]:
+        """Train a specific model."""
+        if name not in self.models:
+            raise ValueError(f"Model {name} not registered")
+        
+        model = self.models[name]
+        print(f"Training {name}...")
+        
+        # Train model (this would be actual training in practice)
+        model.fit(X, y)
+        
+        # Evaluate (simplified)
+        score = model.score(X, y) if hasattr(model, 'score') else 0.95
+        
+        result = {
+            'model_name': name,
+            'score': score,
+            'features_used': list(X.columns),
+            'training_samples': len(X)
+        }
+        
+        self.results[name] = result
+        return result
+
+class MLPipeline:
+    """Complete ML pipeline orchestrator."""
+    
+    def __init__(self, config: ExperimentConfig):
+        self.config = config
+        self.data_ingestion = DataIngestion({})
+        self.data_validator = DataValidator(['feature1', 'feature2', 'target'])
+        self.feature_engineer = FeatureEngineer(config.preprocessing_params)
+        self.model_manager = ModelManager()
+        
+        self.raw_data = None
+        self.processed_data = None
+        self.trained_models = {}
+        
+    def setup_feature_engineering(self):
+        """Configure feature engineering steps."""
+        # Add common transformations
+        self.feature_engineer.add_transformation(
+            'create_interactions',
+            lambda df: self._create_interaction_features(df)
+        )
+        
+        self.feature_engineer.add_transformation(
+            'handle_missing',
+            lambda df: df.fillna(df.mean())
+        )
+    
+    def _create_interaction_features(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Create interaction features."""
+        result = df.copy()
+        numeric_cols = df.select_dtypes(include=[np.number]).columns
+        
+        if len(numeric_cols) >= 2:
+            for i, col1 in enumerate(numeric_cols):
+                for col2 in numeric_cols[i+1:]:
+                    interaction_name = f"{col1}_{col2}_interaction"
+                    result[interaction_name] = df[col1] * df[col2]
+        
+        return result
+    
+    def setup_models(self):
+        """Configure models for training."""
+        from sklearn.ensemble import RandomForestClassifier
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.svm import SVC
+        
+        models = {
+            'random_forest': RandomForestClassifier(**self.config.model_params.get('rf', {})),
+            'logistic_regression': LogisticRegression(**self.config.model_params.get('lr', {})),
+            'svm': SVC(**self.config.model_params.get('svm', {}))
+        }
+        
+        for name, model in models.items():
+            self.model_manager.register_model(name, model)
+    
+    def run_experiment(self) -> Dict[str, Any]:
+        """Run complete ML experiment."""
+        print(f"🚀 Starting experiment: {self.config.experiment_name}")
+        print("=" * 60)
+        
+        # Step 1: Data Ingestion
+        print("\n📥 Step 1: Data Ingestion")
+        self.raw_data = self.data_ingestion.load_data(self.config.data_path)
+        print(f"Loaded {len(self.raw_data)} samples with {len(self.raw_data.columns)} features")
+        
+        # Step 2: Data Validation
+        print("\n✅ Step 2: Data Validation")
+        self.data_validator.validate_schema(self.raw_data)
+        self.data_validator.validate_quality(self.raw_data)
+        print("Data validation passed!")
+        
+        # Step 3: Feature Engineering
+        print("\n⚙️ Step 3: Feature Engineering")
+        self.setup_feature_engineering()
+        self.processed_data = self.feature_engineer.create_features(self.raw_data)
+        print(f"Features after engineering: {len(self.processed_data.columns)}")
+        
+        # Step 4: Model Training
+        print("\n🤖 Step 4: Model Training")
+        self.setup_models()
+        
+        # Prepare data for training
+        X = self.processed_data.drop(columns=[self.config.target_column])
+        y = self.processed_data[self.config.target_column]
+        
+        # Train all models
+        results = {}
+        for model_name in self.model_manager.models:
+            result = self.model_manager.train_model(model_name, X, y)
+            results[model_name] = result
+        
+        # Step 5: Model Comparison
+        print("\n📊 Step 5: Model Evaluation")
+        best_model = self._find_best_model(results)
+        
+        experiment_results = {
+            'experiment_name': self.config.experiment_name,
+            'best_model': best_model,
+            'all_results': results,
+            'data_info': {
+                'original_features': len(self.raw_data.columns),
+                'engineered_features': len(self.processed_data.columns),
+                'samples': len(self.processed_data)
+            }
+        }
+        
+        # Step 6: Save Results
+        print("\n💾 Step 6: Saving Results")
+        self._save_experiment_results(experiment_results)
+        
+        print(f"\n✅ Experiment completed!")
+        print(f"🏆 Best model: {best_model['name']} (score: {best_model['score']:.3f})")
+        
+        return experiment_results
+    
+    def _find_best_model(self, results: Dict[str, Any]) -> Dict[str, Any]:
+        """Find the best performing model."""
+        best_score = 0
+        best_model = None
+        
+        print("Model Performance:")
+        print("-" * 30)
+        
+        for name, result in results.items():
+            score = result['score']
+            print(f"{name}: {score:.3f}")
+            
+            if score > best_score:
+                best_score = score
+                best_model = {'name': name, 'score': score, 'details': result}
+        
+        return best_model
+    
+    def _save_experiment_results(self, results: Dict[str, Any]):
+        """Save experiment results to file."""
+        output_file = f"results_{self.config.experiment_name}.yaml"
+        
+        with open(output_file, 'w') as f:
+            yaml.dump(results, f, default_flow_style=False)
+        
+        print(f"Results saved to: {output_file}")
+
+# Example usage script (scripts/train_model.py)
+def main():
+    """Main training script."""
+    
+    # Create configuration
+    config = ExperimentConfig(
+        experiment_name="customer_churn_prediction_v1",
+        data_path="data/processed/customer_data.csv",
+        target_column="churn",
+        model_type="classification",
+        model_params={
+            'rf': {'n_estimators': 100, 'max_depth': 10, 'random_state': 42},
+            'lr': {'random_state': 42, 'max_iter': 1000},
+            'svm': {'random_state': 42, 'kernel': 'rbf'}
+        },
+        preprocessing_params={
+            'normalize': True,
+            'handle_outliers': True
+        },
+        validation_split=0.2,
+        random_state=42
+    )
+    
+    # Create and run pipeline
+    pipeline = MLPipeline(config)
+    results = pipeline.run_experiment()
+    
+    return results
+
+if __name__ == "__main__":
+    results = main()
+    print("Training completed successfully!")
+</code></pre>
+                <button class="copy-button" onclick="copyCode(this)">📋 Copy</button>
+            </div>
+        </section>
+<!-- --------------------------------------------------------------------- -->
+        <!-- Final Summary Section -->
+        <section id="summary" class="section">
+            <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;">
+                <h2 style="color: white;"><i class="fas fa-trophy"></i> 🎯 Summary & Next Steps</h2>
+                
+                <div class="grid grid-2" style="margin-bottom: 2rem;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                        <h4><i class="fas fa-check-circle"></i> What You've Learned</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>✅ <strong>OOP Fundamentals:</strong> Classes, objects, inheritance</li>
+                            <li>✅ <strong>Advanced Concepts:</strong> Polymorphism, encapsulation, abstraction</li>
+                            <li>✅ <strong>Design Patterns:</strong> Strategy, Observer, Factory patterns</li>
+                            <li>✅ <strong>Best Practices:</strong> SOLID principles, testing, documentation</li>
+                            <li>✅ <strong>Real Applications:</strong> Complete ML pipeline design</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                        <h4><i class="fas fa-road"></i> Next Steps</h4>
+                        <ol style="padding-left: 1.2rem;">
+                            <li><strong>Practice:</strong> Refactor existing scripts into classes</li>
+                            <li><strong>Study:</strong> Examine scikit-learn source code</li>
+                            <li><strong>Build:</strong> Create a complete ML project using OOP</li>
+                            <li><strong>Test:</strong> Write comprehensive unit tests</li>
+                            <li><strong>Document:</strong> Add docstrings and type hints</li>
+                            <li><strong>Deploy:</strong> Package your code for production</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div style="text-align: center; background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 12px;">
+                    <h3 style="color: white; margin-bottom: 1rem;">🚀 Remember: Start Simple, Iterate, and Improve</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                        OOP is a tool to solve problems, not a goal in itself. Focus on making your code 
+                        <strong>readable</strong>, <strong>testable</strong>, and <strong>maintainable</strong>.
+                    </p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1rem;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
+                            <div>Keep Learning</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+                            <div>Keep Coding</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔬</div>
+                            <div>Keep Experimenting</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                            <div>Keep Improving</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; margin: 3rem 0; padding: 2rem; background: var(--card-bg); border-radius: 12px; border: 2px solid var(--primary);">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">
+                <i class="fas fa-heart" style="color: var(--danger);"></i> 
+                Complete Python OOP Reference for Data Science
+                <i class="fas fa-heart" style="color: var(--danger);"></i>
+            </h3>
+            <p style="margin-bottom: 1rem;">
+                This comprehensive guide combines the best elements from multiple sources with enhanced styling, 
+                interactive features, and practical examples.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">
+                <span><i class="fas fa-palette"></i> Beautiful UI Design</span>
+                <span><i class="fas fa-moon"></i> Dark/Light Themes</span>
+                <span><i class="fas fa-copy"></i> Copy Code Buttons</span>
+                <span><i class="fas fa-mobile-alt"></i> Mobile Responsive</span>
+                <span><i class="fas fa-print"></i> Print Friendly</span>
+                <span><i class="fas fa-rocket"></i> Production Ready</span>
+            </div>
+        </footer>
+
+        <!-- Back to Top Button -->
+        <button class="back-to-top no-print" id="backToTop" onclick="scrollToTop()">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+
+        <!-- Footer Note -->
+        <div class="card" style="margin-top: 3rem; text-align: center; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white;">
+            <h3>🎯 This is a comprehensive reference guide!</h3>
+            <p>This guide combines the best of both original documents with enhanced styling, interactive features, and comprehensive coverage of Python OOP for Data Science.</p>
+            <p><strong>Features:</strong> Dark/Light themes, Copy buttons, Smooth scrolling, Print-friendly, Mobile responsive</p>
+        </div>
+    </div>
+
+    <script>
+        // Theme management
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update button text and icon
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            
+            if (newTheme === 'dark') {
+                icon.className = 'fas fa-sun';
+                text.textContent = 'Light Mode';
+            } else {
+                icon.className = 'fas fa-moon';
+                text.textContent = 'Dark Mode';
+            }
+        }
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            
+            if (savedTheme === 'dark') {
+                icon.className = 'fas fa-sun';
+                text.textContent = 'Light Mode';
+            }
+        });
+
+        // Progress bar
+        function updateProgressBar() {
+            const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        }
+
+        // Back to top button
+        function toggleBackToTop() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Section visibility
+        function checkSectionVisibility() {
+            const sections = document.querySelectorAll('.section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < windowHeight * 0.75) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+
+        // Copy code functionality
+        function copyCode(button) {
+            try {
+                // Try multiple ways to find the code element
+                let codeElement = null;
+                let textToCopy = '';
+                
+                // Method 1: Button is after the pre element (current structure)
+                const prevElement = button.previousElementSibling;
+                if (prevElement && prevElement.tagName === 'PRE') {
+                    codeElement = prevElement.querySelector('code');
+                    if (codeElement) {
+                        textToCopy = codeElement.textContent || codeElement.innerText;
+                    }
+                }
+                
+                // Method 2: Button is inside the pre element
+                if (!textToCopy) {
+                    const parentPre = button.closest('pre');
+                    if (parentPre) {
+                        codeElement = parentPre.querySelector('code');
+                        if (codeElement) {
+                            textToCopy = codeElement.textContent || codeElement.innerText;
+                        }
+                    }
+                }
+                
+                // Method 3: Look for any nearby pre/code element
+                if (!textToCopy) {
+                    const container = button.parentElement;
+                    const preElement = container.querySelector('pre');
+                    if (preElement) {
+                        codeElement = preElement.querySelector('code') || preElement;
+                        textToCopy = codeElement.textContent || codeElement.innerText;
+                    }
+                }
+                
+                // If still no text found, try to get text from the previous sibling's content
+                if (!textToCopy && prevElement) {
+                    textToCopy = prevElement.textContent || prevElement.innerText;
+                }
+                
+                if (!textToCopy) {
+                    throw new Error('No code content found to copy');
+                }
+                
+                // Clean up the text (remove extra whitespace)
+                textToCopy = textToCopy.trim();
+                
+                // Modern clipboard API
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        showCopySuccess(button);
+                    }).catch(err => {
+                        console.error('Failed to copy with clipboard API:', err);
+                        fallbackCopyTextToClipboard(textToCopy, button);
+                    });
+                } else {
+                    // Fallback for older browsers or non-secure contexts
+                    fallbackCopyTextToClipboard(textToCopy, button);
+                }
+            } catch (error) {
+                console.error('Copy failed:', error);
+                showCopyError(button);
+            }
+        }
+
+        // Fallback copy method for older browsers
+        function fallbackCopyTextToClipboard(text, button) {
+            if (!text || text.trim().length === 0) {
+                console.error('No text to copy');
+                showCopyError(button);
+                return;
+            }
+            
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            
+            // Make the textarea invisible but accessible
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            textArea.style.padding = '0';
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            textArea.style.background = 'transparent';
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess(button);
+                } else {
+                    console.error('execCommand copy failed');
+                    showCopyError(button);
+                }
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                showCopyError(button);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        // Show copy success feedback
+        function showCopySuccess(button) {
+            const originalText = button.textContent;
+            const originalBackground = button.style.background;
+            
+            button.textContent = '✅ Copied!';
+            button.style.background = 'var(--success)';
+            button.style.color = 'white';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = originalBackground || 'var(--primary)';
+                button.style.color = '';
+            }, 2000);
+        }
+
+        // Show copy error feedback
+        function showCopyError(button) {
+            const originalText = button.textContent;
+            const originalBackground = button.style.background;
+            
+            button.textContent = '❌ Failed';
+            button.style.background = 'var(--danger)';
+            button.style.color = 'white';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = originalBackground || 'var(--primary)';
+                button.style.color = '';
+            }, 2000);
+        }
+
+        // Test function to debug copy functionality
+        function testCopyFunction() {
+            const buttons = document.querySelectorAll('.copy-button');
+            console.log(`Testing ${buttons.length} copy buttons`);
+            
+            buttons.forEach((button, index) => {
+                console.log(`Button ${index + 1}:`);
+                console.log('- Button element:', button);
+                console.log('- Previous sibling:', button.previousElementSibling);
+                console.log('- Parent element:', button.parentElement);
+                
+                const prevElement = button.previousElementSibling;
+                if (prevElement && prevElement.tagName === 'PRE') {
+                    const codeElement = prevElement.querySelector('code');
+                    console.log('- Code element:', codeElement);
+                    if (codeElement) {
+                        const text = codeElement.textContent || codeElement.innerText;
+                        console.log('- Text length:', text.length);
+                        console.log('- First 50 chars:', text.substring(0, 50));
+                    }
+                }
+            });
+        }
+
+        // Add test function to window for debugging
+        window.testCopyFunction = testCopyFunction;
+
+        // Add copy buttons to all code blocks
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing copy buttons...');
+            
+            const preElements = document.querySelectorAll('pre');
+            console.log(`Found ${preElements.length} pre elements`);
+            
+            preElements.forEach((pre, index) => {
+                // Only add button if it doesn't already exist
+                if (!pre.querySelector('.copy-button')) {
+                    const button = document.createElement('button');
+                    button.className = 'copy-button';
+                    button.innerHTML = '📋 Copy';
+                    button.onclick = () => copyCode(button);
+                    button.setAttribute('aria-label', 'Copy code to clipboard');
+                    button.setAttribute('title', 'Copy code to clipboard');
+                    pre.style.position = 'relative'; // Ensure proper positioning
+                    pre.appendChild(button);
+                    console.log(`Added copy button to pre element ${index + 1}`);
+                }
+            });
+            
+            // Also initialize existing copy buttons
+            const existingButtons = document.querySelectorAll('.copy-button');
+            console.log(`Found ${existingButtons.length} existing copy buttons`);
+            
+            existingButtons.forEach((button, index) => {
+                if (!button.onclick) {
+                    button.onclick = () => copyCode(button);
+                    button.setAttribute('aria-label', 'Copy code to clipboard');
+                    button.setAttribute('title', 'Copy code to clipboard');
+                    console.log(`Initialized existing button ${index + 1}`);
+                }
+            });
+            
+            console.log('Copy button initialization complete');
+        });
+
+        // Smooth scrolling for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Event listeners
+        window.addEventListener('scroll', () => {
+            updateProgressBar();
+            toggleBackToTop();
+            checkSectionVisibility();
+        });
+
+        // Initial visibility check
+        document.addEventListener('DOMContentLoaded', checkSectionVisibility);
+
+        // Print functionality
+        function printGuide() {
+            window.print();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + D to toggle theme
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                toggleTheme();
+            }
+            
+            // Ctrl/Cmd + P to print
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printGuide();
+            }
+        });
+    </script>
+</body>
+</html>

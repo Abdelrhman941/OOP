@@ -1,0 +1,2834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object-Oriented Programming in Python for Data Science</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-code: #f5f5f5;
+            --text-primary: #2c3e50;
+            --text-secondary: #5a6c7d;
+            --accent: #3498db;
+            --accent-hover: #2980b9;
+            --border: #e1e8ed;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-code: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent: #4da6e0;
+            --accent-hover: #66b3e5;
+            --border: #404040;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --success: #2ecc71;
+            --warning: #f1c40f;
+            --danger: #e67e22;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        .theme-toggle {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow);
+        }
+
+        .toc {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .toc h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            columns: 2;
+            column-gap: 40px;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+
+        .toc a {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .toc a:hover {
+            background: var(--accent);
+            color: white;
+            border-left-color: var(--success);
+            transform: translateX(5px);
+        }
+
+        .section {
+            margin: 50px 0;
+            scroll-margin-top: 100px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--success);
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            margin: 30px 0 15px;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin: 25px 0 10px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        pre {
+            background: var(--bg-code);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 3px 15px var(--shadow);
+        }
+
+        code {
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .best-practice {
+            background: linear-gradient(135deg, var(--success), #2ecc71);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .best-practice h4 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, var(--warning), #f1c40f);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .warning h4 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .example-box {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid var(--success);
+            box-shadow: 0 3px 15px var(--shadow);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, transparent 0%, var(--accent) 0%, var(--accent) 100%, transparent 100%);
+            background-size: 0% 100%;
+            background-repeat: no-repeat;
+            transition: background-size 0.3s ease;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .highlight:hover {
+            background-size: 100% 100%;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .toc ul {
+                columns: 1;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div>
+                    <h1>Object-Oriented Programming in Python</h1>
+                    <div class="subtitle">A Complete Guide for Data Science & Machine Learning</div>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">🌓 Toggle Theme</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="toc fade-in">
+            <h2>📚 Table of Contents</h2>
+            <ul>
+                <li><a href="#introduction">1. Introduction to OOP for Data Science</a></li>
+                <li><a href="#classes-objects">2. Classes and Objects in Python</a></li>
+                <li><a href="#attributes-methods">3. Attributes and Methods</a></li>
+                <li><a href="#encapsulation">4. Encapsulation</a></li>
+                <li><a href="#inheritance">5. Inheritance</a></li>
+                <li><a href="#polymorphism">6. Polymorphism</a></li>
+                <li><a href="#special-methods">7. Special (Dunder) Methods</a></li>
+                <li><a href="#composition">8. Composition vs Inheritance</a></li>
+                <li><a href="#abstract-classes">9. Abstract Base Classes</a></li>
+                <li><a href="#design-patterns">10. Design Patterns for Data Science</a></li>
+                <li><a href="#applications">11. OOP in Data Science Projects</a></li>
+                <li><a href="#best-practices">12. Best Practices</a></li>
+                <li><a href="#project-structure">13. Example Project Structure</a></li>
+                <li><a href="#common-mistakes">14. Common Mistakes</a></li>
+                <li><a href="#references">15. References & Further Reading</a></li>
+            </ul>
+        </div>
+
+        <section id="introduction" class="section fade-in">
+            <h2>1. Introduction to OOP for Data Science</h2>
+            <p>Object-Oriented Programming (OOP) is a programming paradigm that organizes code into <span class="highlight">classes</span> and <span class="highlight">objects</span>. In Data Science and Machine Learning, OOP helps create reusable, maintainable, and scalable code structures.</p>
+            
+            <h3>Why OOP Matters in Data Science</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>🔄 Reusability</h4>
+                    <p>Create custom transformers, models, and pipelines that can be reused across projects.</p>
+                </div>
+                <div class="card">
+                    <h4>🔧 Maintainability</h4>
+                    <p>Organize complex ML workflows into manageable, testable components.</p>
+                </div>
+                <div class="card">
+                    <h4>📈 Scalability</h4>
+                    <p>Build systems that can grow from prototypes to production-ready applications.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>Real-World Example</h4>
+                <p>Instead of writing separate functions for different ML models, you can create a base <code>Model</code> class and inherit from it to create <code>LinearRegression</code>, <code>RandomForest</code>, and <code>NeuralNetwork</code> classes.</p>
+            </div>
+        </section>
+
+        <section id="classes-objects" class="section fade-in">
+            <h2>2. Classes and Objects in Python</h2>
+            <p>A <strong>class</strong> is a blueprint for creating objects. An <strong>object</strong> is an instance of a class.</p>
+
+            <h3>Basic Class Syntax</h3>
+            <pre><code>class DataProcessor:
+    """A simple data processor for cleaning datasets."""
+    
+    def __init__(self, dataset_name):
+        self.dataset_name = dataset_name
+        self.data = None
+        self.is_cleaned = False
+    
+    def load_data(self, filepath):
+        """Load data from a file."""
+        import pandas as pd
+        self.data = pd.read_csv(filepath)
+        print(f"Loaded {len(self.data)} rows from {filepath}")
+    
+    def clean_data(self):
+        """Remove missing values and duplicates."""
+        if self.data is not None:
+            initial_rows = len(self.data)
+            self.data = self.data.dropna().drop_duplicates()
+            final_rows = len(self.data)
+            self.is_cleaned = True
+            print(f"Cleaned data: {initial_rows} → {final_rows} rows")
+
+# Creating objects (instances)
+processor1 = DataProcessor("Customer Data")
+processor2 = DataProcessor("Sales Data")
+
+# Using the objects
+processor1.load_data("customers.csv")
+processor1.clean_data()
+print(f"Processor 1 status: {processor1.is_cleaned}")
+</code></pre>
+
+            <div class="best-practice">
+                <h4>🎯 Best Practice</h4>
+                <p>Use descriptive class names that clearly indicate their purpose. For data science, consider names like <code>FeatureEngineer</code>, <code>ModelTrainer</code>, or <code>DataValidator</code>.</p>
+            </div>
+        </section>
+
+        <section id="attributes-methods" class="section fade-in">
+            <h2>3. Attributes and Methods</h2>
+            <p><strong>Attributes</strong> store data, while <strong>methods</strong> define behavior. In data science, attributes might store datasets, model parameters, or configuration settings.</p>
+
+            <h3>Instance vs Class Attributes</h3>
+            <pre><code>class MLModel:
+    # Class attribute (shared by all instances)
+    model_type = "Machine Learning Model"
+    created_models = 0
+    
+    def __init__(self, algorithm, hyperparameters=None):
+        # Instance attributes (unique to each instance)
+        self.algorithm = algorithm
+        self.hyperparameters = hyperparameters or {}
+        self.is_trained = False
+        self.accuracy = None
+        self.model = None
+        
+        # Update class attribute
+        MLModel.created_models += 1
+    
+    def train(self, X_train, y_train):
+        """Train the model with given data."""
+        print(f"Training {self.algorithm} model...")
+        # Simulate training
+        self.is_trained = True
+        self.accuracy = 0.85  # Simulated accuracy
+        return self
+    
+    def predict(self, X_test):
+        """Make predictions on test data."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained before making predictions")
+        print(f"Making predictions with {self.algorithm}")
+        return ["prediction"] * len(X_test)  # Simulated predictions
+    
+    @property
+    def status(self):
+        """Get current model status."""
+        if self.is_trained:
+            return f"Trained {self.algorithm} (Accuracy: {self.accuracy:.2%})"
+        return f"Untrained {self.algorithm}"
+
+# Usage example
+model1 = MLModel("Random Forest", {"n_estimators": 100})
+model2 = MLModel("SVM", {"C": 1.0, "kernel": "rbf"})
+
+print(f"Created models: {MLModel.created_models}")
+print(f"Model 1 status: {model1.status}")
+
+# Train and use the model
+model1.train([], [])  # Simulated training data
+print(f"Model 1 status after training: {model1.status}")
+</code></pre>
+
+            <h3>Property Decorators</h3>
+            <p>Properties allow you to access methods like attributes, perfect for computed values in data science.</p>
+
+            <pre><code>class Dataset:
+    def __init__(self, data):
+        self._data = data
+    
+    @property
+    def shape(self):
+        """Get dataset dimensions."""
+        return self._data.shape
+    
+    @property
+    def missing_percentage(self):
+        """Calculate percentage of missing values."""
+        total_cells = self._data.size
+        missing_cells = self._data.isnull().sum().sum()
+        return (missing_cells / total_cells) * 100
+    
+    @property
+    def memory_usage(self):
+        """Get memory usage in MB."""
+        return self._data.memory_usage(deep=True).sum() / 1024**2
+
+# Usage
+import pandas as pd
+import numpy as np
+
+data = pd.DataFrame({
+    'age': [25, 30, np.nan, 35, 40],
+    'income': [50000, 60000, 55000, np.nan, 70000],
+    'score': [85, 90, 88, 92, np.nan]
+})
+
+dataset = Dataset(data)
+print(f"Shape: {dataset.shape}")
+print(f"Missing data: {dataset.missing_percentage:.1f}%")
+print(f"Memory usage: {dataset.memory_usage:.2f} MB")
+</code></pre>
+        </section>
+
+        <section id="encapsulation" class="section fade-in">
+            <h2>4. Encapsulation</h2>
+            <p>Encapsulation hides internal implementation details and protects data integrity. In Python, we use naming conventions to indicate private attributes and methods.</p>
+
+            <h3>Private Attributes and Methods</h3>
+            <pre><code>class DataPipeline:
+    def __init__(self, name):
+        self.name = name
+        self._steps = []  # Protected attribute
+        self.__fitted = False  # Private attribute
+        self.__results = {}  # Private attribute
+    
+    def add_step(self, step_name, transformer):
+        """Add a step to the pipeline."""
+        self._steps.append((step_name, transformer))
+        print(f"Added step: {step_name}")
+    
+    def _validate_data(self, data):
+        """Private method to validate input data."""
+        if data is None or len(data) == 0:
+            raise ValueError("Data cannot be empty")
+        return True
+    
+    def fit(self, X, y=None):
+        """Fit the pipeline on training data."""
+        self._validate_data(X)
+        print(f"Fitting pipeline '{self.name}' with {len(self._steps)} steps")
+        
+        current_X = X
+        for step_name, transformer in self._steps:
+            print(f"  Fitting {step_name}...")
+            # Simulate fitting
+            current_X = transformer  # Simplified for example
+        
+        self.__fitted = True
+        self.__results['fit_time'] = 1.23  # Simulated
+        return self
+    
+    def transform(self, X):
+        """Transform data using the fitted pipeline."""
+        if not self.__fitted:
+            raise ValueError("Pipeline must be fitted before transforming")
+        
+        self._validate_data(X)
+        print(f"Transforming data through {len(self._steps)} steps")
+        return X  # Simplified transformation
+    
+    def get_results(self):
+        """Get pipeline results (controlled access to private data)."""
+        if not self.__fitted:
+            return "Pipeline not fitted yet"
+        return self.__results.copy()  # Return copy to prevent external modification
+
+# Usage example
+pipeline = DataPipeline("Feature Engineering Pipeline")
+pipeline.add_step("scaler", "StandardScaler")
+pipeline.add_step("pca", "PCA")
+
+# This works - public interface
+data = [[1, 2, 3], [4, 5, 6]]
+pipeline.fit(data)
+transformed = pipeline.transform(data)
+results = pipeline.get_results()
+
+# This would raise AttributeError (private attributes)
+# print(pipeline.__fitted)  # Can't access directly
+# print(pipeline.__results)  # Can't access directly
+
+# Protected attributes can be accessed but shouldn't be
+print(f"Steps (protected): {pipeline._steps}")
+</code></pre>
+
+            <div class="warning">
+                <h4>⚠️ Common Mistake</h4>
+                <p>Don't overuse private attributes. In data science, you often need flexibility to inspect and debug your objects. Use protected attributes (_single_underscore) more than private ones (__double_underscore).</p>
+            </div>
+        </section>
+
+        <section id="inheritance" class="section fade-in">
+            <h2>5. Inheritance</h2>
+            <p>Inheritance allows classes to inherit attributes and methods from parent classes. Perfect for creating specialized versions of general data science components.</p>
+
+            <h3>Basic Inheritance</h3>
+            <pre><code>class BaseModel:
+    """Base class for all machine learning models."""
+    
+    def __init__(self, name):
+        self.name = name
+        self.is_trained = False
+        self.training_time = None
+        self.metrics = {}
+    
+    def prepare_data(self, X, y=None):
+        """Common data preparation steps."""
+        print(f"Preparing data for {self.name}")
+        # Common preprocessing
+        return X, y
+    
+    def evaluate(self, X_test, y_test):
+        """Common evaluation logic."""
+        if not self.is_trained:
+            raise ValueError("Model must be trained first")
+        print(f"Evaluating {self.name}")
+        return {"accuracy": 0.85}  # Simplified
+    
+    def save_model(self, filepath):
+        """Save model to file."""
+        print(f"Saving {self.name} to {filepath}")
+
+class LinearRegressionModel(BaseModel):
+    """Linear Regression implementation."""
+    
+    def __init__(self, regularization=None):
+        super().__init__("Linear Regression")
+        self.regularization = regularization
+        self.coefficients = None
+        self.intercept = None
+    
+    def train(self, X, y):
+        """Train linear regression model."""
+        X, y = self.prepare_data(X, y)  # Use inherited method
+        print(f"Training {self.name} with regularization: {self.regularization}")
+        
+        # Simulate training
+        self.coefficients = [0.5, -0.3, 1.2]  # Simulated
+        self.intercept = 2.1
+        self.is_trained = True
+        self.training_time = 0.05
+        
+        return self
+    
+    def predict(self, X):
+        """Make predictions."""
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        print(f"Making predictions with {self.name}")
+        return [1.0] * len(X)  # Simulated predictions
+
+class RandomForestModel(BaseModel):
+    """Random Forest implementation."""
+    
+    def __init__(self, n_estimators=100, max_depth=None):
+        super().__init__("Random Forest")
+        self.n_estimators = n_estimators
+        self.max_depth = max_depth
+        self.trees = []
+    
+    def train(self, X, y):
+        """Train random forest model."""
+        X, y = self.prepare_data(X, y)  # Use inherited method
+        print(f"Training {self.name} with {self.n_estimators} trees")
+        
+        # Simulate training
+        self.trees = [f"tree_{i}" for i in range(self.n_estimators)]
+        self.is_trained = True
+        self.training_time = 2.3
+        
+        return self
+    
+    def predict(self, X):
+        """Make predictions using ensemble."""
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        print(f"Making predictions with {self.name} ({len(self.trees)} trees)")
+        return [0.0] * len(X)  # Simulated predictions
+    
+    def get_feature_importance(self):
+        """Get feature importance (specific to Random Forest)."""
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        return {"feature_1": 0.4, "feature_2": 0.6}
+
+# Usage example
+lr_model = LinearRegressionModel(regularization="ridge")
+rf_model = RandomForestModel(n_estimators=200, max_depth=10)
+
+# Train models
+training_data = [[1, 2], [3, 4], [5, 6]]
+target_data = [1, 0, 1]
+
+lr_model.train(training_data, target_data)
+rf_model.train(training_data, target_data)
+
+# Use inherited methods
+lr_metrics = lr_model.evaluate(training_data, target_data)
+rf_metrics = rf_model.evaluate(training_data, target_data)
+
+# Use specific methods
+rf_importance = rf_model.get_feature_importance()
+print(f"Feature importance: {rf_importance}")
+</code></pre>
+
+            <h3>Method Overriding</h3>
+            <pre><code>class DataTransformer:
+    """Base transformer class."""
+    
+    def fit(self, X, y=None):
+        """Fit the transformer."""
+        print("Fitting base transformer")
+        return self
+    
+    def transform(self, X):
+        """Transform the data."""
+        print("Applying base transformation")
+        return X
+    
+    def fit_transform(self, X, y=None):
+        """Fit and transform in one step."""
+        return self.fit(X, y).transform(X)
+
+class StandardScaler(DataTransformer):
+    """Standard scaler transformer."""
+    
+    def __init__(self):
+        self.mean_ = None
+        self.std_ = None
+    
+    def fit(self, X, y=None):
+        """Calculate mean and standard deviation."""
+        print("Calculating mean and std for StandardScaler")
+        import numpy as np
+        self.mean_ = np.mean(X, axis=0)
+        self.std_ = np.std(X, axis=0)
+        return self
+    
+    def transform(self, X):
+        """Standardize the data."""
+        if self.mean_ is None or self.std_ is None:
+            raise ValueError("Scaler not fitted")
+        print("Applying standard scaling")
+        import numpy as np
+        return (X - self.mean_) / self.std_
+
+class MinMaxScaler(DataTransformer):
+    """Min-max scaler transformer."""
+    
+    def __init__(self):
+        self.min_ = None
+        self.max_ = None
+    
+    def fit(self, X, y=None):
+        """Calculate min and max values."""
+        print("Calculating min and max for MinMaxScaler")
+        import numpy as np
+        self.min_ = np.min(X, axis=0)
+        self.max_ = np.max(X, axis=0)
+        return self
+    
+    def transform(self, X):
+        """Scale to [0, 1] range."""
+        if self.min_ is None or self.max_ is None:
+            raise ValueError("Scaler not fitted")
+        print("Applying min-max scaling")
+        return (X - self.min_) / (self.max_ - self.min_)
+
+# Usage
+import numpy as np
+data = np.array([[1, 2], [3, 4], [5, 6]])
+
+# Both inherit from DataTransformer but implement different scaling
+std_scaler = StandardScaler()
+minmax_scaler = MinMaxScaler()
+
+# Same interface, different behavior
+scaled_data1 = std_scaler.fit_transform(data)
+scaled_data2 = minmax_scaler.fit_transform(data)
+</code></pre>
+        </section>
+
+        <section id="polymorphism" class="section fade-in">
+            <h2>6. Polymorphism</h2>
+            <p>Polymorphism allows objects of different classes to be treated the same way. In data science, this enables you to use different models or transformers interchangeably.</p>
+
+            <h3>Duck Typing in Action</h3>
+            <pre><code>class ModelTrainer:
+    """Trains and evaluates different types of models."""
+    
+    def __init__(self):
+        self.trained_models = []
+    
+    def train_model(self, model, X_train, y_train, X_test, y_test):
+        """Train any model that has train, predict, and evaluate methods."""
+        print(f"\n--- Training {model.name} ---")
+        
+        # All models can be trained the same way (polymorphism)
+        model.train(X_train, y_train)
+        
+        # All models can make predictions
+        predictions = model.predict(X_test)
+        
+        # All models can be evaluated
+        metrics = model.evaluate(X_test, y_test)
+        
+        self.trained_models.append({
+            'model': model,
+            'predictions': predictions,
+            'metrics': metrics
+        })
+        
+        print(f"Completed training {model.name}")
+        return model
+    
+    def compare_models(self):
+        """Compare all trained models."""
+        print("\n--- Model Comparison ---")
+        for entry in self.trained_models:
+            model = entry['model']
+            metrics = entry['metrics']
+            print(f"{model.name}: Accuracy = {metrics.get('accuracy', 'N/A')}")
+
+# Different model implementations with same interface
+class LogisticRegression(BaseModel):
+    def __init__(self):
+        super().__init__("Logistic Regression")
+        self.weights = None
+    
+    def train(self, X, y):
+        X, y = self.prepare_data(X, y)
+        print(f"  Training {self.name} with gradient descent")
+        self.weights = [0.1, 0.2, 0.3]  # Simulated
+        self.is_trained = True
+        return self
+    
+    def predict(self, X):
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        print(f"  Making predictions with {self.name}")
+        return [1, 0, 1, 0, 1]  # Simulated
+
+class SupportVectorMachine(BaseModel):
+    def __init__(self, kernel='rbf'):
+        super().__init__("Support Vector Machine")
+        self.kernel = kernel
+        self.support_vectors = None
+    
+    def train(self, X, y):
+        X, y = self.prepare_data(X, y)
+        print(f"  Training {self.name} with {self.kernel} kernel")
+        self.support_vectors = [[1, 2], [3, 4]]  # Simulated
+        self.is_trained = True
+        return self
+    
+    def predict(self, X):
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        print(f"  Making predictions with {self.name}")
+        return [0, 1, 0, 1, 0]  # Simulated
+
+# Polymorphism in action
+trainer = ModelTrainer()
+
+# Create different models
+models = [
+    LinearRegressionModel(),
+    LogisticRegression(),
+    RandomForestModel(n_estimators=50),
+    SupportVectorMachine(kernel='linear')
+]
+
+# Train all models using the same interface
+training_data = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]
+training_labels = [0, 1, 0, 1, 0]
+test_data = [[2, 3], [4, 5], [6, 7], [8, 9], [10, 11]]
+test_labels = [1, 0, 1, 0, 1]
+
+for model in models:
+    trainer.train_model(model, training_data, training_labels, test_data, test_labels)
+
+# Compare all models
+trainer.compare_models()
+</code></pre>
+
+            <div class="best-practice">
+                <h4>🎯 Best Practice</h4>
+                <p>Design consistent interfaces across your classes. If all your models have <code>train()</code>, <code>predict()</code>, and <code>evaluate()</code> methods, you can easily swap them in your pipeline without changing the rest of your code.</p>
+            </div>
+        </section>
+
+        <section id="special-methods" class="section fade-in">
+            <h2>7. Special (Dunder) Methods</h2>
+            <p>Special methods (magic methods) allow your objects to work with built-in Python functions and operators. Very useful for creating intuitive data science objects.</p>
+
+            <h3>Common Special Methods</h3>
+            <pre><code>class DataBatch:
+    """A batch of data that behaves like a container."""
+    
+    def __init__(self, data, labels=None):
+        self.data = data
+        self.labels = labels
+        self.batch_id = id(self)
+    
+    def __len__(self):
+        """Return the number of samples in the batch."""
+        return len(self.data)
+    
+    def __getitem__(self, index):
+        """Allow indexing: batch[0] or batch[1:3]."""
+        if self.labels is not None:
+            return self.data[index], self.labels[index]
+        return self.data[index]
+    
+    def __setitem__(self, index, value):
+        """Allow item assignment: batch[0] = new_value."""
+        if isinstance(value, tuple) and len(value) == 2:
+            self.data[index], self.labels[index] = value
+        else:
+            self.data[index] = value
+    
+    def __iter__(self):
+        """Make the batch iterable."""
+        if self.labels is not None:
+            return iter(zip(self.data, self.labels))
+        return iter(self.data)
+    
+    def __repr__(self):
+        """String representation for debugging."""
+        return f"DataBatch(samples={len(self)}, batch_id={self.batch_id})"
+    
+    def __str__(self):
+        """Human-readable string representation."""
+        label_info = f", with labels" if self.labels else ""
+        return f"Data batch containing {len(self)} samples{label_info}"
+    
+    def __add__(self, other):
+        """Combine two batches using the + operator."""
+        if not isinstance(other, DataBatch):
+            raise TypeError("Can only add DataBatch objects")
+        
+        combined_data = self.data + other.data
+        combined_labels = None
+        
+        if self.labels and other.labels:
+            combined_labels = self.labels + other.labels
+        
+        return DataBatch(combined_data, combined_labels)
+    
+    def __eq__(self, other):
+        """Check if two batches are equal."""
+        if not isinstance(other, DataBatch):
+            return False
+        return (self.data == other.data and 
+                self.labels == other.labels)
+    
+    def __contains__(self, item):
+        """Check if an item is in the batch."""
+        return item in self.data
+
+# Usage examples
+batch1 = DataBatch([1, 2, 3, 4], ['a', 'b', 'c', 'd'])
+batch2 = DataBatch([5, 6, 7], ['e', 'f', 'g'])
+
+# __len__
+print(f"Batch 1 length: {len(batch1)}")
+
+# __getitem__
+print(f"First item: {batch1[0]}")
+print(f"Slice: {batch1[1:3]}")
+
+# __setitem__
+batch1[0] = (10, 'z')
+print(f"Modified first item: {batch1[0]}")
+
+# __iter__
+print("Iterating through batch:")
+for data, label in batch1:
+    print(f"  Data: {data}, Label: {label}")
+
+# __repr__ and __str__
+print(f"Repr: {repr(batch1)}")
+print(f"Str: {str(batch1)}")
+
+# __add__
+combined_batch = batch1 + batch2
+print(f"Combined batch: {combined_batch}")
+
+# __contains__
+print(f"Is 2 in batch1? {2 in batch1}")
+print(f"Is 10 in batch1? {10 in batch1}")
+</code></pre>
+
+            <h3>Comparison and Arithmetic Operations</h3>
+            <pre><code>class ModelScore:
+    """Represents a model's performance score."""
+    
+    def __init__(self, accuracy, precision, recall, model_name="Unknown"):
+        self.accuracy = accuracy
+        self.precision = precision
+        self.recall = recall
+        self.model_name = model_name
+    
+    @property
+    def f1_score(self):
+        """Calculate F1 score."""
+        if self.precision + self.recall == 0:
+            return 0
+        return 2 * (self.precision * self.recall) / (self.precision + self.recall)
+    
+    def __lt__(self, other):
+        """Less than comparison based on F1 score."""
+        return self.f1_score < other.f1_score
+    
+    def __le__(self, other):
+        """Less than or equal comparison."""
+        return self.f1_score <= other.f1_score
+    
+    def __gt__(self, other):
+        """Greater than comparison."""
+        return self.f1_score > other.f1_score
+    
+    def __ge__(self, other):
+        """Greater than or equal comparison."""
+        return self.f1_score >= other.f1_score
+    
+    def __eq__(self, other):
+        """Equality comparison."""
+        return abs(self.f1_score - other.f1_score) < 1e-6
+    
+    def __add__(self, other):
+        """Average two model scores."""
+        avg_accuracy = (self.accuracy + other.accuracy) / 2
+        avg_precision = (self.precision + other.precision) / 2
+        avg_recall = (self.recall + other.recall) / 2
+        return ModelScore(avg_accuracy, avg_precision, avg_recall, 
+                         f"Average of {self.model_name} and {other.model_name}")
+    
+    def __str__(self):
+        return (f"{self.model_name}: Accuracy={self.accuracy:.3f}, "
+                f"Precision={self.precision:.3f}, Recall={self.recall:.3f}, "
+                f"F1={self.f1_score:.3f}")
+
+# Usage
+score1 = ModelScore(0.85, 0.80, 0.90, "Random Forest")
+score2 = ModelScore(0.82, 0.88, 0.76, "SVM")
+score3 = ModelScore(0.88, 0.85, 0.85, "Neural Network")
+
+# Comparison operations
+print(f"RF > SVM: {score1 > score2}")
+print(f"NN > RF: {score3 > score1}")
+
+# Sorting models by performance
+models = [score1, score2, score3]
+models.sort(reverse=True)  # Sort by F1 score (descending)
+
+print("\nModels ranked by F1 score:")
+for i, model in enumerate(models, 1):
+    print(f"{i}. {model}")
+
+# Average scores
+avg_score = score1 + score2
+print(f"\nAverage score: {avg_score}")
+</code></pre>
+        </section>
+
+        <section id="composition" class="section fade-in">
+            <h2>8. Composition vs Inheritance in Pipelines</h2>
+            <p><strong>Composition</strong> means "has-a" relationships, while <strong>Inheritance</strong> means "is-a" relationships. In data science, composition is often more flexible for building complex pipelines.</p>
+
+            <h3>Composition Example: ML Pipeline</h3>
+            <pre><code>class DataLoader:
+    """Handles data loading operations."""
+    
+    def __init__(self, source_type="csv"):
+        self.source_type = source_type
+    
+    def load(self, path):
+        """Load data from source."""
+        print(f"Loading data from {path} ({self.source_type})")
+        import pandas as pd
+        if self.source_type == "csv":
+            return pd.read_csv(path)
+        elif self.source_type == "json":
+            return pd.read_json(path)
+        else:
+            raise ValueError(f"Unsupported source type: {self.source_type}")
+
+class DataValidator:
+    """Validates data quality."""
+    
+    def __init__(self, required_columns=None):
+        self.required_columns = required_columns or []
+    
+    def validate(self, data):
+        """Validate data structure and quality."""
+        print("Validating data...")
+        
+        # Check required columns
+        missing_cols = set(self.required_columns) - set(data.columns)
+        if missing_cols:
+            raise ValueError(f"Missing required columns: {missing_cols}")
+        
+        # Check for empty data
+        if len(data) == 0:
+            raise ValueError("Dataset is empty")
+        
+        print(f"Data validation passed: {len(data)} rows, {len(data.columns)} columns")
+        return True
+
+class FeatureEngineer:
+    """Creates and transforms features."""
+    
+    def __init__(self):
+        self.transformations = []
+    
+    def add_transformation(self, name, func):
+        """Add a feature transformation."""
+        self.transformations.append((name, func))
+    
+    def apply_transformations(self, data):
+        """Apply all transformations to the data."""
+        print(f"Applying {len(self.transformations)} feature transformations...")
+        
+        transformed_data = data.copy()
+        for name, func in self.transformations:
+            print(f"  Applying {name}")
+            transformed_data = func(transformed_data)
+        
+        return transformed_data
+
+class ModelSelector:
+    """Selects the best model from multiple candidates."""
+    
+    def __init__(self, models):
+        self.models = models
+        self.best_model = None
+        self.results = {}
+    
+    def select_best(self, X_train, y_train, X_val, y_val):
+        """Train all models and select the best one."""
+        print(f"Evaluating {len(self.models)} models...")
+        
+        best_score = -1
+        for name, model in self.models.items():
+            print(f"  Training {name}...")
+            model.train(X_train, y_train)
+            score = model.evaluate(X_val, y_val)['accuracy']
+            self.results[name] = score
+            
+            if score > best_score:
+                best_score = score
+                self.best_model = model
+        
+        print(f"Best model: {self.best_model.name} (accuracy: {best_score:.3f})")
+        return self.best_model
+
+class MLPipeline:
+    """Complete ML pipeline using composition."""
+    
+    def __init__(self, name):
+        self.name = name
+        # Composition: the pipeline HAS these components
+        self.loader = None
+        self.validator = None
+        self.feature_engineer = None
+        self.model_selector = None
+        self.final_model = None
+    
+    def set_loader(self, loader):
+        """Set the data loader component."""
+        self.loader = loader
+        return self
+    
+    def set_validator(self, validator):
+        """Set the data validator component."""
+        self.validator = validator
+        return self
+    
+    def set_feature_engineer(self, engineer):
+        """Set the feature engineer component."""
+        self.feature_engineer = engineer
+        return self
+    
+    def set_model_selector(self, selector):
+        """Set the model selector component."""
+        self.model_selector = selector
+        return self
+    
+    def run_pipeline(self, train_path, val_path=None):
+        """Execute the complete pipeline."""
+        print(f"\n🚀 Running ML Pipeline: {self.name}")
+        print("=" * 50)
+        
+        # Step 1: Load data
+        if not self.loader:
+            raise ValueError("No data loader configured")
+        train_data = self.loader.load(train_path)
+        
+        if val_path:
+            val_data = self.loader.load(val_path)
+        else:
+            # Split training data
+            split_idx = int(len(train_data) * 0.8)
+            val_data = train_data[split_idx:]
+            train_data = train_data[:split_idx]
+        
+        # Step 2: Validate data
+        if self.validator:
+            self.validator.validate(train_data)
+            self.validator.validate(val_data)
+        
+        # Step 3: Feature engineering
+        if self.feature_engineer:
+            train_data = self.feature_engineer.apply_transformations(train_data)
+            val_data = self.feature_engineer.apply_transformations(val_data)
+        
+        # Step 4: Model selection
+        if self.model_selector:
+            # Simplified: assume last column is target
+            X_train, y_train = train_data.iloc[:, :-1], train_data.iloc[:, -1]
+            X_val, y_val = val_data.iloc[:, :-1], val_data.iloc[:, -1]
+            
+            self.final_model = self.model_selector.select_best(
+                X_train, y_train, X_val, y_val
+            )
+        
+        print(f"\n✅ Pipeline '{self.name}' completed successfully!")
+        return self
+
+# Build a pipeline using composition
+pipeline = MLPipeline("Customer Churn Prediction")
+
+# Configure components
+loader = DataLoader("csv")
+validator = DataValidator(required_columns=["customer_id", "age", "income", "churn"])
+engineer = FeatureEngineer()
+engineer.add_transformation("age_groups", lambda df: df.assign(age_group=df['age'] // 10))
+
+models = {
+    "Random Forest": RandomForestModel(n_estimators=100),
+    "Logistic Regression": LinearRegressionModel(),
+    "SVM": SupportVectorMachine()
+}
+selector = ModelSelector(models)
+
+# Assemble pipeline
+pipeline.set_loader(loader) \
+        .set_validator(validator) \
+        .set_feature_engineer(engineer) \
+        .set_model_selector(selector)
+
+# Run pipeline (would work with real data files)
+# pipeline.run_pipeline("train.csv", "validation.csv")
+</code></pre>
+
+            <div class="best-practice">
+                <h4>🎯 When to Use Composition vs Inheritance</h4>
+                <ul>
+                    <li><strong>Use Inheritance</strong> when you have a clear "is-a" relationship (RandomForest IS-A Model)</li>
+                    <li><strong>Use Composition</strong> when you have "has-a" relationships (Pipeline HAS-A DataLoader)</li>
+                    <li><strong>Composition is more flexible</strong> - you can easily swap components</li>
+                    <li><strong>Inheritance is simpler</strong> for shared behavior across similar objects</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="abstract-classes" class="section fade-in">
+            <h2>9. Abstract Base Classes and Interfaces</h2>
+            <p>Abstract Base Classes (ABCs) define interfaces that subclasses must implement. Perfect for ensuring consistent APIs across different implementations.</p>
+
+            <h3>Creating Abstract Base Classes</h3>
+            <pre><code>from abc import ABC, abstractmethod
+from typing import Any, Dict, List, Optional
+
+class BaseTransformer(ABC):
+    """Abstract base class for all data transformers."""
+    
+    def __init__(self, name: str):
+        self.name = name
+        self.is_fitted = False
+    
+    @abstractmethod
+    def fit(self, X, y=None):
+        """Fit the transformer to the data."""
+        pass
+    
+    @abstractmethod
+    def transform(self, X):
+        """Transform the data."""
+        pass
+    
+    def fit_transform(self, X, y=None):
+        """Fit and transform in one step."""
+        return self.fit(X, y).transform(X)
+    
+    @abstractmethod
+    def get_params(self) -> Dict[str, Any]:
+        """Get transformer parameters."""
+        pass
+    
+    def __str__(self):
+        return f"{self.name} ({'fitted' if self.is_fitted else 'not fitted'})"
+
+class BaseEstimator(ABC):
+    """Abstract base class for all estimators/models."""
+    
+    def __init__(self, name: str):
+        self.name = name
+        self.is_trained = False
+        self.training_metrics = {}
+    
+    @abstractmethod
+    def fit(self, X, y):
+        """Train the model."""
+        pass
+    
+    @abstractmethod
+    def predict(self, X):
+        """Make predictions."""
+        pass
+    
+    @abstractmethod
+    def score(self, X, y) -> float:
+        """Calculate model score."""
+        pass
+    
+    @abstractmethod
+    def get_params(self) -> Dict[str, Any]:
+        """Get model parameters."""
+        pass
+    
+    @abstractmethod
+    def set_params(self, **params):
+        """Set model parameters."""
+        pass
+
+# Concrete implementations
+class StandardScaler(BaseTransformer):
+    """Standard scaler implementation."""
+    
+    def __init__(self):
+        super().__init__("StandardScaler")
+        self.mean_ = None
+        self.std_ = None
+    
+    def fit(self, X, y=None):
+        """Calculate mean and standard deviation."""
+        import numpy as np
+        self.mean_ = np.mean(X, axis=0)
+        self.std_ = np.std(X, axis=0)
+        self.is_fitted = True
+        return self
+    
+    def transform(self, X):
+        """Apply standardization."""
+        if not self.is_fitted:
+            raise ValueError("Transformer not fitted")
+        import numpy as np
+        return (X - self.mean_) / self.std_
+    
+    def get_params(self):
+        return {
+            'mean_': self.mean_,
+            'std_': self.std_,
+            'is_fitted': self.is_fitted
+        }
+
+class PCATransformer(BaseTransformer):
+    """PCA implementation."""
+    
+    def __init__(self, n_components=2):
+        super().__init__("PCA")
+        self.n_components = n_components
+        self.components_ = None
+        self.explained_variance_ = None
+    
+    def fit(self, X, y=None):
+        """Fit PCA to the data."""
+        print(f"Fitting PCA with {self.n_components} components")
+        import numpy as np
+        # Simplified PCA simulation
+        self.components_ = np.random.random((self.n_components, X.shape[1]))
+        self.explained_variance_ = np.random.random(self.n_components)
+        self.is_fitted = True
+        return self
+    
+    def transform(self, X):
+        """Apply PCA transformation."""
+        if not self.is_fitted:
+            raise ValueError("Transformer not fitted")
+        import numpy as np
+        return np.dot(X, self.components_.T)
+    
+    def get_params(self):
+        return {
+            'n_components': self.n_components,
+            'components_': self.components_,
+            'explained_variance_': self.explained_variance_
+        }
+
+class LogisticRegressionEstimator(BaseEstimator):
+    """Logistic regression implementation."""
+    
+    def __init__(self, learning_rate=0.01, max_iterations=1000):
+        super().__init__("LogisticRegression")
+        self.learning_rate = learning_rate
+        self.max_iterations = max_iterations
+        self.weights_ = None
+        self.bias_ = None
+    
+    def fit(self, X, y):
+        """Train logistic regression."""
+        import numpy as np
+        print(f"Training {self.name}...")
+        
+        # Simulate training
+        self.weights_ = np.random.random(X.shape[1])
+        self.bias_ = np.random.random()
+        self.is_trained = True
+        self.training_metrics = {'final_loss': 0.23, 'iterations': 150}
+        return self
+    
+    def predict(self, X):
+        """Make predictions."""
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        import numpy as np
+        # Simplified prediction
+        return (np.dot(X, self.weights_) + self.bias_ > 0).astype(int)
+    
+    def predict_proba(self, X):
+        """Predict probabilities."""
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        import numpy as np
+        logits = np.dot(X, self.weights_) + self.bias_
+        return 1 / (1 + np.exp(-logits))
+    
+    def score(self, X, y):
+        """Calculate accuracy score."""
+        predictions = self.predict(X)
+        return sum(predictions == y) / len(y)
+    
+    def get_params(self):
+        return {
+            'learning_rate': self.learning_rate,
+            'max_iterations': self.max_iterations,
+            'weights_': self.weights_,
+            'bias_': self.bias_
+        }
+    
+    def set_params(self, **params):
+        for param, value in params.items():
+            if hasattr(self, param):
+                setattr(self, param, value)
+        return self
+
+# Using the abstract interfaces
+def create_pipeline(transformers: List[BaseTransformer], 
+                   estimator: BaseEstimator):
+    """Create a pipeline with any transformers and estimator."""
+    
+    class Pipeline:
+        def __init__(self, steps, final_estimator):
+            self.steps = steps
+            self.estimator = final_estimator
+        
+        def fit(self, X, y):
+            current_X = X
+            for transformer in self.steps:
+                transformer.fit(current_X, y)
+                current_X = transformer.transform(current_X)
+            
+            self.estimator.fit(current_X, y)
+            return self
+        
+        def predict(self, X):
+            current_X = X
+            for transformer in self.steps:
+                current_X = transformer.transform(current_X)
+            return self.estimator.predict(current_X)
+        
+        def score(self, X, y):
+            current_X = X
+            for transformer in self.steps:
+                current_X = transformer.transform(current_X)
+            return self.estimator.score(current_X, y)
+    
+    return Pipeline(transformers, estimator)
+
+# Usage example
+import numpy as np
+
+# Generate sample data
+X = np.random.random((100, 4))
+y = np.random.randint(0, 2, 100)
+
+# Create pipeline with different transformers
+scaler = StandardScaler()
+pca = PCATransformer(n_components=2)
+model = LogisticRegressionEstimator(learning_rate=0.05)
+
+pipeline = create_pipeline([scaler, pca], model)
+
+# Train and evaluate
+pipeline.fit(X, y)
+predictions = pipeline.predict(X)
+accuracy = pipeline.score(X, y)
+
+print(f"Pipeline accuracy: {accuracy:.3f}")
+
+# All components follow the same interface
+for transformer in [scaler, pca]:
+    print(f"{transformer}: {transformer.get_params()}")
+print(f"{model}: {model.get_params()}")
+</code></pre>
+
+            <div class="warning">
+                <h4>⚠️ Important Note</h4>
+                <p>You cannot instantiate abstract base classes directly. Attempting to create <code>BaseTransformer()</code> will raise a <code>TypeError</code>. All abstract methods must be implemented in subclasses.</p>
+            </div>
+        </section>
+
+        <section id="design-patterns" class="section fade-in">
+            <h2>10. Design Patterns for Data Science</h2>
+            <p>Design patterns are reusable solutions to common problems. Here are key patterns useful in data science projects.</p>
+
+            <h3>Strategy Pattern for Model Selection</h3>
+            <pre><code>from abc import ABC, abstractmethod
+
+class ModelStrategy(ABC):
+    """Strategy interface for different modeling approaches."""
+    
+    @abstractmethod
+    def train(self, X, y):
+        pass
+    
+    @abstractmethod
+    def predict(self, X):
+        pass
+    
+    @abstractmethod
+    def get_name(self):
+        pass
+
+class RandomForestStrategy(ModelStrategy):
+    """Random Forest modeling strategy."""
+    
+    def __init__(self, n_estimators=100):
+        self.n_estimators = n_estimators
+        self.model = None
+    
+    def train(self, X, y):
+        print(f"Training Random Forest with {self.n_estimators} trees")
+        # Simulate training
+        self.model = f"RF_model_{self.n_estimators}"
+        return self
+    
+    def predict(self, X):
+        if not self.model:
+            raise ValueError("Model not trained")
+        return [0, 1, 0, 1] * (len(X) // 4 + 1)[:len(X)]
+    
+    def get_name(self):
+        return f"Random Forest ({self.n_estimators} trees)"
+
+class XGBoostStrategy(ModelStrategy):
+    """XGBoost modeling strategy."""
+    
+    def __init__(self, max_depth=6, learning_rate=0.1):
+        self.max_depth = max_depth
+        self.learning_rate = learning_rate
+        self.model = None
+    
+    def train(self, X, y):
+        print(f"Training XGBoost (depth={self.max_depth}, lr={self.learning_rate})")
+        self.model = f"XGB_model_{self.max_depth}_{self.learning_rate}"
+        return self
+    
+    def predict(self, X):
+        if not self.model:
+            raise ValueError("Model not trained")
+        return [1, 0, 1, 0] * (len(X) // 4 + 1)[:len(X)]
+    
+    def get_name(self):
+        return f"XGBoost (depth={self.max_depth}, lr={self.learning_rate})"
+
+class ModelContext:
+    """Context class that uses different modeling strategies."""
+    
+    def __init__(self, strategy: ModelStrategy = None):
+        self._strategy = strategy
+    
+    def set_strategy(self, strategy: ModelStrategy):
+        """Change the modeling strategy at runtime."""
+        self._strategy = strategy
+    
+    def train_model(self, X, y):
+        """Train using the current strategy."""
+        if not self._strategy:
+            raise ValueError("No strategy set")
+        return self._strategy.train(X, y)
+    
+    def make_predictions(self, X):
+        """Make predictions using the current strategy."""
+        if not self._strategy:
+            raise ValueError("No strategy set")
+        return self._strategy.predict(X)
+    
+    def get_model_info(self):
+        """Get information about the current model."""
+        if not self._strategy:
+            return "No strategy set"
+        return self._strategy.get_name()
+
+# Usage example
+training_data = [[1, 2], [3, 4], [5, 6], [7, 8]]
+training_labels = [0, 1, 0, 1]
+test_data = [[2, 3], [4, 5]]
+
+# Create context with initial strategy
+context = ModelContext(RandomForestStrategy(n_estimators=50))
+
+print(f"Current model: {context.get_model_info()}")
+context.train_model(training_data, training_labels)
+rf_predictions = context.make_predictions(test_data)
+print(f"RF Predictions: {rf_predictions}")
+
+# Switch strategy at runtime
+context.set_strategy(XGBoostStrategy(max_depth=4, learning_rate=0.05))
+print(f"\nSwitched to: {context.get_model_info()}")
+context.train_model(training_data, training_labels)
+xgb_predictions = context.make_predictions(test_data)
+print(f"XGB Predictions: {xgb_predictions}")
+</code></pre>
+
+            <h3>Observer Pattern for Model Monitoring</h3>
+            <pre><code>class ModelObserver(ABC):
+    """Observer interface for model monitoring."""
+    
+    @abstractmethod
+    def update(self, model, event, data):
+        pass
+
+class PerformanceMonitor(ModelObserver):
+    """Monitors model performance metrics."""
+    
+    def __init__(self):
+        self.performance_history = []
+    
+    def update(self, model, event, data):
+        if event == "prediction":
+            # Simulate performance calculation
+            accuracy = data.get('accuracy', 0.85)
+            self.performance_history.append({
+                'model': model.name,
+                'accuracy': accuracy,
+                'timestamp': data.get('timestamp', 'now')
+            })
+            print(f"📊 Performance Monitor: {model.name} accuracy = {accuracy:.3f}")
+            
+            # Alert if performance drops
+            if accuracy < 0.8:
+                print(f"⚠️  Alert: {model.name} performance below threshold!")
+
+class DataDriftDetector(ModelObserver):
+    """Detects data drift in model inputs."""
+    
+    def __init__(self):
+        self.baseline_stats = {}
+        self.drift_alerts = []
+    
+    def update(self, model, event, data):
+        if event == "prediction":
+            features = data.get('features', {})
+            
+            # Simulate drift detection
+            for feature, value in features.items():
+                baseline = self.baseline_stats.get(feature, value)
+                drift_score = abs(value - baseline) / baseline if baseline != 0 else 0
+                
+                if drift_score > 0.2:  # 20% drift threshold
+                    alert = f"Data drift detected in {feature}: {drift_score:.2%}"
+                    self.drift_alerts.append(alert)
+                    print(f"🔄 Drift Detector: {alert}")
+
+class ModelLogger(ModelObserver):
+    """Logs all model activities."""
+    
+    def __init__(self):
+        self.logs = []
+    
+    def update(self, model, event, data):
+        log_entry = {
+            'model': model.name,
+            'event': event,
+            'data': data,
+            'timestamp': 'now'
+        }
+        self.logs.append(log_entry)
+        print(f"📝 Logger: {model.name} - {event}")
+
+class ObservableModel:
+    """Model that can be observed by multiple observers."""
+    
+    def __init__(self, name):
+        self.name = name
+        self._observers = []
+        self.is_trained = False
+    
+    def attach(self, observer: ModelObserver):
+        """Attach an observer."""
+        self._observers.append(observer)
+        print(f"📎 Attached {observer.__class__.__name__} to {self.name}")
+    
+    def detach(self, observer: ModelObserver):
+        """Detach an observer."""
+        self._observers.remove(observer)
+        print(f"📎 Detached {observer.__class__.__name__} from {self.name}")
+    
+    def notify(self, event, data):
+        """Notify all observers of an event."""
+        for observer in self._observers:
+            observer.update(self, event, data)
+    
+    def train(self, X, y):
+        """Train the model and notify observers."""
+        print(f"Training {self.name}...")
+        self.is_trained = True
+        
+        self.notify("training", {
+            'samples': len(X),
+            'features': len(X[0]) if X else 0
+        })
+        return self
+    
+    def predict(self, X, y_true=None):
+        """Make predictions and notify observers."""
+        if not self.is_trained:
+            raise ValueError("Model not trained")
+        
+        predictions = [0, 1] * (len(X) // 2 + 1)[:len(X)]
+        
+        # Simulate prediction data
+        prediction_data = {
+            'predictions': predictions,
+            'samples': len(X),
+            'features': {f'feature_{i}': 0.5 for i in range(3)},
+            'accuracy': 0.87 if y_true is None else sum(p == t for p, t in zip(predictions, y_true)) / len(y_true)
+        }
+        
+        self.notify("prediction", prediction_data)
+        return predictions
+
+# Usage example
+model = ObservableModel("Customer Churn Predictor")
+
+# Attach observers
+perf_monitor = PerformanceMonitor()
+drift_detector = DataDriftDetector()
+logger = ModelLogger()
+
+model.attach(perf_monitor)
+model.attach(drift_detector)
+model.attach(logger)
+
+# Train and predict - observers will be notified
+training_data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+training_labels = [0, 1, 0]
+
+model.train(training_data, training_labels)
+
+test_data = [[2, 3, 4], [5, 6, 7]]
+predictions = model.predict(test_data)
+
+print(f"\nPredictions: {predictions}")
+print(f"Performance history: {len(perf_monitor.performance_history)} entries")
+print(f"Drift alerts: {len(drift_detector.drift_alerts)} alerts")
+print(f"Log entries: {len(logger.logs)} entries")
+</code></pre>
+
+            <h3>Factory Pattern for Model Creation</h3>
+            <pre><code>class ModelFactory:
+    """Factory for creating different types of models."""
+    
+    @staticmethod
+    def create_model(model_type, **kwargs):
+        """Create a model based on type and parameters."""
+        if model_type.lower() == "random_forest":
+            return RandomForestModel(
+                n_estimators=kwargs.get('n_estimators', 100)
+            )
+        elif model_type.lower() == "linear_regression":
+            return LinearRegressionModel(
+                regularization=kwargs.get('regularization', None)
+            )
+        elif model_type.lower() == "svm":
+            return SupportVectorMachine(
+                kernel=kwargs.get('kernel', 'rbf')
+            )
+        elif model_type.lower() == "logistic_regression":
+            return LogisticRegressionEstimator(
+                learning_rate=kwargs.get('learning_rate', 0.01)
+            )
+        else:
+            raise ValueError(f"Unknown model type: {model_type}")
+    
+    @staticmethod
+    def get_available_models():
+        """Get list of available model types."""
+        return ["random_forest", "linear_regression", "svm", "logistic_regression"]
+    
+    @staticmethod
+    def create_ensemble(model_configs):
+        """Create an ensemble of models."""
+        models = []
+        for config in model_configs:
+            model_type = config.pop('type')
+            model = ModelFactory.create_model(model_type, **config)
+            models.append(model)
+        return models
+
+# Advanced factory with configuration
+class ConfigurableModelFactory:
+    """Factory that reads model configurations from files or dicts."""
+    
+    def __init__(self):
+        self.default_configs = {
+            'random_forest': {'n_estimators': 100},
+            'svm': {'kernel': 'rbf'},
+            'logistic_regression': {'learning_rate': 0.01}
+        }
+    
+    def create_from_config(self, config):
+        """Create model from configuration dictionary."""
+        model_type = config['type']
+        params = config.get('parameters', {})
+        
+        # Merge with defaults
+        merged_params = {**self.default_configs.get(model_type, {}), **params}
+        
+        return ModelFactory.create_model(model_type, **merged_params)
+    
+    def create_pipeline_from_config(self, pipeline_config):
+        """Create entire pipeline from configuration."""
+        models = []
+        for model_config in pipeline_config.get('models', []):
+            model = self.create_from_config(model_config)
+            models.append(model)
+        return models
+
+# Usage examples
+print("Available models:", ModelFactory.get_available_models())
+
+# Create individual models
+rf_model = ModelFactory.create_model("random_forest", n_estimators=200)
+svm_model = ModelFactory.create_model("svm", kernel="linear")
+
+print(f"Created: {rf_model.name}")
+print(f"Created: {svm_model.name}")
+
+# Create ensemble
+ensemble_config = [
+    {'type': 'random_forest', 'n_estimators': 50},
+    {'type': 'svm', 'kernel': 'rbf'},
+    {'type': 'logistic_regression', 'learning_rate': 0.05}
+]
+
+ensemble = ModelFactory.create_ensemble(ensemble_config)
+print(f"\nCreated ensemble with {len(ensemble)} models:")
+for model in ensemble:
+    print(f"  - {model.name}")
+
+# Using configurable factory
+config_factory = ConfigurableModelFactory()
+
+pipeline_config = {
+    'models': [
+        {'type': 'random_forest', 'parameters': {'n_estimators': 150}},
+        {'type': 'svm', 'parameters': {'kernel': 'polynomial'}},
+        {'type': 'logistic_regression'}  # Will use defaults
+    ]
+}
+
+pipeline_models = config_factory.create_pipeline_from_config(pipeline_config)
+print(f"\nCreated pipeline with {len(pipeline_models)} models:")
+for model in pipeline_models:
+    print(f"  - {model.name}")
+</code></pre>
+        </section>
+
+        <section id="applications" class="section fade-in">
+            <h2>11. Applying OOP in Data Science Projects</h2>
+            <p>Real-world examples of how OOP principles improve data science code organization and maintainability.</p>
+
+            <h3>Complete ML Project Structure</h3>
+            <pre><code>class DataIngestion:
+    """Handles data collection from various sources."""
+    
+    def __init__(self, source_config):
+        self.source_config = source_config
+        self.data_cache = {}
+    
+    def ingest_from_api(self, endpoint, params=None):
+        """Fetch data from API endpoint."""
+        print(f"Ingesting data from API: {endpoint}")
+        # Simulate API call
+        return {"data": [{"id": 1, "value": 100}] * 10}
+    
+    def ingest_from_database(self, query):
+        """Fetch data from database."""
+        print(f"Executing database query")
+        # Simulate database query
+        return {"data": [{"id": i, "value": i * 10} for i in range(20)]}
+    
+    def ingest_from_file(self, filepath, file_type="csv"):
+        """Load data from file."""
+        print(f"Loading {file_type} file: {filepath}")
+        # Simulate file loading
+        return {"data": [{"id": i, "value": i * 5} for i in range(15)]}
+
+class DataProcessor:
+    """Handles data cleaning and preprocessing."""
+    
+    def __init__(self):
+        self.processing_steps = []
+        self.processed_data = None
+    
+    def add_cleaning_step(self, step_name, step_function):
+        """Add a data cleaning step."""
+        self.processing_steps.append((step_name, step_function))
+    
+    def remove_outliers(self, data, threshold=3):
+        """Remove outliers using z-score."""
+        print(f"Removing outliers with threshold {threshold}")
+        # Simulate outlier removal
+        return [d for d in data if d.get('value', 0) < 100]
+    
+    def handle_missing_values(self, data, strategy="mean"):
+        """Handle missing values."""
+        print(f"Handling missing values using {strategy} strategy")
+        # Simulate missing value handling
+        return data
+    
+    def normalize_features(self, data):
+        """Normalize numerical features."""
+        print("Normalizing features")
+        # Simulate normalization
+        for item in data:
+            if 'value' in item:
+                item['normalized_value'] = item['value'] / 100
+        return data
+    
+    def process(self, raw_data):
+        """Apply all processing steps."""
+        processed = raw_data.copy()
+        
+        for step_name, step_function in self.processing_steps:
+            print(f"Applying {step_name}")
+            processed = step_function(processed)
+        
+        self.processed_data = processed
+        return processed
+
+class FeatureStore:
+    """Manages feature engineering and storage."""
+    
+    def __init__(self):
+        self.features = {}
+        self.feature_definitions = {}
+    
+    def register_feature(self, name, definition, computation_func):
+        """Register a new feature."""
+        self.feature_definitions[name] = {
+            'definition': definition,
+            'func': computation_func
+        }
+        print(f"Registered feature: {name}")
+    
+    def compute_feature(self, name, data):
+        """Compute a specific feature."""
+        if name not in self.feature_definitions:
+            raise ValueError(f"Feature {name} not registered")
+        
+        func = self.feature_definitions[name]['func']
+        feature_values = func(data)
+        self.features[name] = feature_values
+        
+        print(f"Computed feature: {name}")
+        return feature_values
+    
+    def get_feature_matrix(self, feature_names, data):
+        """Get feature matrix for specified features."""
+        feature_matrix = {}
+        
+        for name in feature_names:
+            if name not in self.features:
+                self.compute_feature(name, data)
+            feature_matrix[name] = self.features[name]
+        
+        return feature_matrix
+
+class ModelManager:
+    """Manages model training, evaluation, and deployment."""
+    
+    def __init__(self):
+        self.models = {}
+        self.model_versions = {}
+        self.best_model = None
+        self.performance_history = []
+    
+    def register_model(self, name, model):
+        """Register a new model."""
+        self.models[name] = model
+        self.model_versions[name] = 1
+        print(f"Registered model: {name} (v1)")
+    
+    def train_model(self, model_name, X, y, validation_data=None):
+        """Train a specific model."""
+        if model_name not in self.models:
+            raise ValueError(f"Model {model_name} not registered")
+        
+        model = self.models[model_name]
+        print(f"Training {model_name}...")
+        
+        # Train the model
+        model.train(X, y)
+        
+        # Evaluate if validation data provided
+        if validation_data:
+            X_val, y_val = validation_data
+            score = model.evaluate(X_val, y_val)['accuracy']
+            
+            self.performance_history.append({
+                'model': model_name,
+                'version': self.model_versions[model_name],
+                'score': score
+            })
+            
+            # Update best model
+            if not self.best_model or score > max(h['score'] for h in self.performance_history if h['model'] == self.best_model):
+                self.best_model = model_name
+                print(f"New best model: {model_name} (score: {score:.3f})")
+        
+        return model
+    
+    def deploy_model(self, model_name, deployment_config=None):
+        """Deploy a model for predictions."""
+        if model_name not in self.models:
+            raise ValueError(f"Model {model_name} not registered")
+        
+        model = self.models[model_name]
+        if not model.is_trained:
+            raise ValueError(f"Model {model_name} not trained")
+        
+        print(f"Deploying {model_name} for production use")
+        # Simulate deployment logic
+        return f"{model_name}_deployed"
+    
+    def get_model_comparison(self):
+        """Compare all trained models."""
+        if not self.performance_history:
+            return "No models evaluated yet"
+        
+        comparison = {}
+        for entry in self.performance_history:
+            model_name = entry['model']
+            if model_name not in comparison or entry['score'] > comparison[model_name]:
+                comparison[model_name] = entry['score']
+        
+        return comparison
+
+class MLProject:
+    """Main project orchestrator."""
+    
+    def __init__(self, project_name):
+        self.project_name = project_name
+        self.data_ingestion = DataIngestion({})
+        self.data_processor = DataProcessor()
+        self.feature_store = FeatureStore()
+        self.model_manager = ModelManager()
+        
+        self.raw_data = None
+        self.processed_data = None
+        self.features = None
+    
+    def setup_data_pipeline(self):
+        """Configure the data processing pipeline."""
+        # Add cleaning steps
+        self.data_processor.add_cleaning_step(
+            "outlier_removal", 
+            lambda data: self.data_processor.remove_outliers(data)
+        )
+        self.data_processor.add_cleaning_step(
+            "missing_values", 
+            lambda data: self.data_processor.handle_missing_values(data)
+        )
+        self.data_processor.add_cleaning_step(
+            "normalization", 
+            lambda data: self.data_processor.normalize_features(data)
+        )
+        
+        # Register features
+        self.feature_store.register_feature(
+            "value_squared",
+            "Square of the value field",
+            lambda data: [item.get('value', 0) ** 2 for item in data]
+        )
+        self.feature_store.register_feature(
+            "value_log",
+            "Log of the value field",
+            lambda data: [abs(item.get('value', 1)) ** 0.5 for item in data]  # Simplified
+        )
+    
+    def setup_models(self):
+        """Configure models for the project."""
+        models = {
+            'rf': RandomForestModel(n_estimators=100),
+            'lr': LinearRegressionModel(),
+            'svm': SupportVectorMachine()
+        }
+        
+        for name, model in models.items():
+            self.model_manager.register_model(name, model)
+    
+    def run_experiment(self, data_source="file", data_path="data.csv"):
+        """Run a complete ML experiment."""
+        print(f"\n🚀 Starting ML experiment: {self.project_name}")
+        print("=" * 60)
+        
+        # Step 1: Data Ingestion
+        print("\n📥 Step 1: Data Ingestion")
+        if data_source == "file":
+            self.raw_data = self.data_ingestion.ingest_from_file(data_path)['data']
+        elif data_source == "api":
+            self.raw_data = self.data_ingestion.ingest_from_api(data_path)['data']
+        else:
+            self.raw_data = self.data_ingestion.ingest_from_database(data_path)['data']
+        
+        print(f"Ingested {len(self.raw_data)} records")
+        
+        # Step 2: Data Processing
+        print("\n🧹 Step 2: Data Processing")
+        self.processed_data = self.data_processor.process(self.raw_data)
+        print(f"Processed {len(self.processed_data)} records")
+        
+        # Step 3: Feature Engineering
+        print("\n⚙️ Step 3: Feature Engineering")
+        self.features = self.feature_store.get_feature_matrix(
+            ['value_squared', 'value_log'], 
+            self.processed_data
+        )
+        print(f"Generated {len(self.features)} features")
+        
+        # Step 4: Model Training
+        print("\n🤖 Step 4: Model Training")
+        # Simulate training data
+        X_train = [[1, 2], [3, 4], [5, 6]] * 10
+        y_train = [0, 1, 0] * 10
+        X_val = [[2, 3], [4, 5]]
+        y_val = [1, 0]
+        
+        for model_name in self.model_manager.models:
+            self.model_manager.train_model(
+                model_name, X_train, y_train, (X_val, y_val)
+            )
+        
+        # Step 5: Model Comparison
+        print("\n📊 Step 5: Model Evaluation")
+        comparison = self.model_manager.get_model_comparison()
+        print("Model Performance:")
+        for model, score in comparison.items():
+            print(f"  {model}: {score:.3f}")
+        
+        print(f"\n🏆 Best model: {self.model_manager.best_model}")
+        
+        return {
+            'best_model': self.model_manager.best_model,
+            'model_scores': comparison,
+            'features_generated': len(self.features)
+        }
+
+# Usage example
+project = MLProject("Customer Lifetime Value Prediction")
+
+# Setup the project
+project.setup_data_pipeline()
+project.setup_models()
+
+# Run the experiment
+results = project.run_experiment(data_source="file", data_path="customer_data.csv")
+
+print(f"\n✅ Experiment completed!")
+print(f"Results: {results}")
+</code></pre>
+        </section>
+
+        <section id="best-practices" class="section fade-in">
+            <h2>12. Best Practices</h2>
+
+            <div class="grid">
+                <div class="best-practice">
+                    <h4>🎯 Single Responsibility Principle</h4>
+                    <p>Each class should have one reason to change. Don't mix data loading, processing, and modeling in the same class.</p>
+                </div>
+                
+                <div class="best-practice">
+                    <h4>🔧 Dependency Injection</h4>
+                    <p>Pass dependencies as parameters rather than creating them inside classes. This makes testing and flexibility much easier.</p>
+                </div>
+                
+                <div class="best-practice">
+                    <h4>📝 Clear Naming</h4>
+                    <p>Use descriptive names: <code>FeatureEngineer</code> not <code>FE</code>, <code>DataValidator</code> not <code>DV</code>.</p>
+                </div>
+                
+                <div class="best-practice">
+                    <h4>🧪 Design for Testing</h4>
+                    <p>Make your classes easy to test by avoiding hard-coded values and external dependencies.</p>
+                </div>
+            </div>
+
+            <h3>Best Practice Examples</h3>
+            <pre><code># ✅ GOOD: Single Responsibility
+class DataLoader:
+    """Only responsible for loading data."""
+    def load_csv(self, path): pass
+    def load_json(self, path): pass
+
+class DataCleaner:
+    """Only responsible for cleaning data."""
+    def remove_outliers(self, data): pass
+    def handle_missing(self, data): pass
+
+# ❌ BAD: Multiple responsibilities
+class DataHandler:
+    """Tries to do everything - avoid this!"""
+    def load_csv(self, path): pass
+    def clean_data(self, data): pass
+    def train_model(self, data): pass
+    def save_results(self, results): pass
+
+# ✅ GOOD: Dependency Injection
+class ModelTrainer:
+    def __init__(self, data_loader, preprocessor, model):
+        self.data_loader = data_loader
+        self.preprocessor = preprocessor
+        self.model = model
+    
+    def train(self, data_path):
+        data = self.data_loader.load(data_path)
+        clean_data = self.preprocessor.process(data)
+        return self.model.fit(clean_data)
+
+# ❌ BAD: Hard dependencies
+class ModelTrainer:
+    def __init__(self):
+        self.data_loader = CSVLoader()  # Hard-coded dependency
+        self.preprocessor = StandardPreprocessor()  # Hard-coded
+    
+    def train(self, data_path):
+        # Difficult to test with different loaders/preprocessors
+        pass
+
+# ✅ GOOD: Configuration-driven
+class ModelConfig:
+    def __init__(self, model_type, hyperparameters=None):
+        self.model_type = model_type
+        self.hyperparameters = hyperparameters or {}
+    
+    def create_model(self):
+        if self.model_type == "random_forest":
+            return RandomForestModel(**self.hyperparameters)
+        # ... other models
+
+config = ModelConfig("random_forest", {"n_estimators": 100})
+model = config.create_model()
+
+# ✅ GOOD: Error handling
+class DataValidator:
+    def validate_schema(self, data, required_columns):
+        missing = set(required_columns) - set(data.columns)
+        if missing:
+            raise ValueError(f"Missing columns: {missing}")
+        return True
+    
+    def validate_data_quality(self, data, max_missing_percent=0.5):
+        missing_percent = data.isnull().sum().sum() / data.size
+        if missing_percent > max_missing_percent:
+            raise ValueError(f"Too much missing data: {missing_percent:.1%}")
+        return True
+</code></pre>
+
+            <div class="warning">
+                <h4>⚠️ Common Anti-Patterns to Avoid</h4>
+                <ul>
+                    <li><strong>God Classes:</strong> Classes that try to do everything</li>
+                    <li><strong>Hard-coded Values:</strong> Magic numbers and strings scattered throughout code</li>
+                    <li><strong>Deep Inheritance:</strong> More than 3-4 levels of inheritance</li>
+                    <li><strong>Circular Dependencies:</strong> Classes that depend on each other</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="project-structure" class="section fade-in">
+            <h2>13. Example Project Structure</h2>
+            <p>Here's how to organize a real data science project using OOP principles:</p>
+
+            <pre><code>ml_project/
+├── data/
+│   ├── raw/                    # Raw data files
+│   ├── processed/              # Cleaned data
+│   └── features/               # Feature sets
+├── src/
+│   ├── __init__.py
+│   ├── data/
+│   │   ├── __init__.py
+│   │   ├── ingestion.py        # DataIngestion class
+│   │   ├── validation.py       # DataValidator class
+│   │   └── preprocessing.py    # DataProcessor class
+│   ├── features/
+│   │   ├── __init__.py
+│   │   ├── base.py            # BaseTransformer ABC
+│   │   ├── engineering.py     # FeatureEngineer class
+│   │   └── selection.py       # FeatureSelector class
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── base.py            # BaseModel ABC
+│   │   ├── linear.py          # LinearModels
+│   │   ├── ensemble.py        # EnsembleModels
+│   │   └── neural.py          # NeuralNetworks
+│   ├── evaluation/
+│   │   ├── __init__.py
+│   │   ├── metrics.py         # ModelEvaluator class
+│   │   └── visualization.py   # ResultsVisualizer class
+│   ├── pipeline/
+│   │   ├── __init__.py
+│   │   ├── training.py        # TrainingPipeline class
+│   │   └── inference.py       # InferencePipeline class
+│   └── utils/
+│       ├── __init__.py
+│       ├── config.py          # Configuration classes
+│       └── logging.py         # Logging utilities
+├── tests/
+│   ├── test_data/
+│   ├── test_features/
+│   ├── test_models/
+│   └── test_pipeline/
+├── configs/
+│   ├── model_config.yaml      # Model configurations
+│   ├── data_config.yaml       # Data pipeline configs
+│   └── experiment_config.yaml # Experiment settings
+├── notebooks/
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   └── 03_model_experiments.ipynb
+├── scripts/
+│   ├── train_model.py         # Training script
+│   ├── evaluate_model.py      # Evaluation script
+│   └── predict.py             # Prediction script
+├── requirements.txt
+└── setup.py
+
+# Example main training script
+# scripts/train_model.py
+
+from src.data.ingestion import DataIngestion
+from src.data.preprocessing import DataProcessor
+from src.features.engineering import FeatureEngineer
+from src.models.ensemble import RandomForestModel
+from src.pipeline.training import TrainingPipeline
+from src.utils.config import load_config
+
+def main():
+    # Load configuration
+    config = load_config('configs/experiment_config.yaml')
+    
+    # Initialize components
+    data_ingestion = DataIngestion(config['data']['source'])
+    data_processor = DataProcessor(config['preprocessing'])
+    feature_engineer = FeatureEngineer(config['features'])
+    model = RandomForestModel(**config['model']['parameters'])
+    
+    # Create pipeline
+    pipeline = TrainingPipeline(
+        data_ingestion=data_ingestion,
+        data_processor=data_processor,
+        feature_engineer=feature_engineer,
+        model=model
+    )
+    
+    # Run training
+    results = pipeline.run(
+        train_path=config['data']['train_path'],
+        validation_path=config['data']['validation_path']
+    )
+    
+    print(f"Training completed! Results: {results}")
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+
+            <h3>Configuration Management</h3>
+            <pre><code># src/utils/config.py
+import yaml
+from dataclasses import dataclass
+from typing import Dict, Any, Optional
+
+@dataclass
+class DataConfig:
+    source: str
+    train_path: str
+    validation_path: str
+    test_path: Optional[str] = None
+
+@dataclass
+class ModelConfig:
+    type: str
+    parameters: Dict[str, Any]
+
+@dataclass
+class ExperimentConfig:
+    name: str
+    data: DataConfig
+    model: ModelConfig
+    preprocessing: Dict[str, Any]
+    features: Dict[str, Any]
+
+class ConfigManager:
+    """Manages configuration loading and validation."""
+    
+    @staticmethod
+    def load_config(config_path: str) -> ExperimentConfig:
+        """Load configuration from YAML file."""
+        with open(config_path, 'r') as f:
+            config_dict = yaml.safe_load(f)
+        
+        return ExperimentConfig(
+            name=config_dict['experiment']['name'],
+            data=DataConfig(**config_dict['data']),
+            model=ModelConfig(**config_dict['model']),
+            preprocessing=config_dict.get('preprocessing', {}),
+            features=config_dict.get('features', {})
+        )
+    
+    @staticmethod
+    def validate_config(config: ExperimentConfig) -> bool:
+        """Validate configuration parameters."""
+        # Add validation logic
+        required_fields = ['name', 'data', 'model']
+        for field in required_fields:
+            if not hasattr(config, field):
+                raise ValueError(f"Missing required config field: {field}")
+        return True
+
+# Example YAML configuration file
+# configs/experiment_config.yaml
+experiment:
+  name: "customer_churn_prediction_v1"
+
+data:
+  source: "csv"
+  train_path: "data/processed/train.csv"
+  validation_path: "data/processed/validation.csv"
+  test_path: "data/processed/test.csv"
+
+preprocessing:
+  remove_outliers: true
+  outlier_threshold: 3
+  handle_missing: "mean"
+  normalize: true
+
+features:
+  engineering:
+    - "age_groups"
+    - "income_brackets"
+    - "interaction_features"
+  selection:
+    method: "mutual_info"
+    n_features: 20
+
+model:
+  type: "random_forest"
+  parameters:
+    n_estimators: 100
+    max_depth: 10
+    random_state: 42
+</code></pre>
+        </section>
+
+        <section id="common-mistakes" class="section fade-in">
+            <h2>14. Common Mistakes</h2>
+            
+            <div class="warning">
+                <h4>❌ Mistake 1: Over-Engineering</h4>
+                <p>Creating complex class hierarchies when simple functions would work better.</p>
+                <pre><code># ❌ BAD: Over-engineered for simple task
+class NumberProcessor:
+    def __init__(self):
+        self.processor = self
+    
+    def process(self, number):
+        return self._multiply_by_two(number)
+    
+    def _multiply_by_two(self, number):
+        return number * 2
+
+# ✅ GOOD: Simple function for simple task
+def multiply_by_two(number):
+    return number * 2</code></pre>
+            </div>
+
+            <div class="warning">
+                <h4>❌ Mistake 2: Tight Coupling</h4>
+                <p>Classes that are too dependent on each other's internal implementation.</p>
+                <pre><code># ❌ BAD: Tight coupling
+class DataProcessor:
+    def __init__(self):
+        self.loader = CSVLoader()  # Tightly coupled to CSV
+    
+    def process(self, path):
+        return self.loader.load_csv(path)  # Can't use other formats
+
+# ✅ GOOD: Loose coupling
+class DataProcessor:
+    def __init__(self, loader):
+        self.loader = loader  # Can accept any loader
+    
+    def process(self, path):
+        return self.loader.load(path)  # Works with any loader</code></pre>
+            </div>
+
+            <div class="warning">
+                <h4>❌ Mistake 3: Ignoring Error Handling</h4>
+                <p>Not validating inputs or handling edge cases properly.</p>
+                <pre><code># ❌ BAD: No error handling
+class ModelTrainer:
+    def train(self, X, y):
+        return self.model.fit(X, y)  # What if X or y is None?
+
+# ✅ GOOD: Proper error handling
+class ModelTrainer:
+    def train(self, X, y):
+        if X is None or y is None:
+            raise ValueError("Training data cannot be None")
+        if len(X) != len(y):
+            raise ValueError("X and y must have same length")
+        
+        return self.model.fit(X, y)</code></pre>
+            </div>
+
+            <div class="warning">
+                <h4>❌ Mistake 4: Missing Documentation</h4>
+                <p>Classes and methods without clear documentation.</p>
+                <pre><code># ❌ BAD: No documentation
+class FeatureSelector:
+    def select(self, X, y, k):
+        # What does this do? What is k?
+        pass
+
+# ✅ GOOD: Clear documentation
+class FeatureSelector:
+    """Selects the most important features for modeling.
+    
+    Uses statistical tests to rank features by their relationship
+    with the target variable.
+    """
+    
+    def select(self, X, y, k=10):
+        """Select top k features based on statistical importance.
+        
+        Args:
+            X: Feature matrix (pandas DataFrame or numpy array)
+            y: Target variable (pandas Series or numpy array)
+            k: Number of features to select (default: 10)
+        
+        Returns:
+            Selected feature indices or column names
+        
+        Raises:
+            ValueError: If k is larger than number of available features
+        """
+        pass</code></pre>
+            </div>
+
+            <h3>Debugging OOP Code</h3>
+            <pre><code>class DebuggableModel:
+    """Model with built-in debugging capabilities."""
+    
+    def __init__(self, name, debug=False):
+        self.name = name
+        self.debug = debug
+        self.training_history = []
+        self.prediction_history = []
+    
+    def _log_debug(self, message):
+        """Log debug information if debug mode is enabled."""
+        if self.debug:
+            print(f"[DEBUG {self.name}] {message}")
+    
+    def train(self, X, y):
+        """Train with debug logging."""
+        self._log_debug(f"Training with {len(X)} samples, {len(X[0])} features")
+        
+        # Training logic here
+        training_info = {
+            'samples': len(X),
+            'features': len(X[0]),
+            'target_distribution': {}  # Would calculate actual distribution
+        }
+        
+        self.training_history.append(training_info)
+        self._log_debug(f"Training completed. History length: {len(self.training_history)}")
+        
+        return self
+    
+    def predict(self, X):
+        """Predict with debug logging."""
+        self._log_debug(f"Making predictions for {len(X)} samples")
+        
+        predictions = [0] * len(X)  # Simplified
+        
+        prediction_info = {
+            'samples': len(X),
+            'predictions': predictions
+        }
+        
+        self.prediction_history.append(prediction_info)
+        self._log_debug(f"Predictions completed. Prediction history: {len(self.prediction_history)}")
+        
+        return predictions
+    
+    def get_debug_info(self):
+        """Get comprehensive debug information."""
+        return {
+            'name': self.name,
+            'training_runs': len(self.training_history),
+            'prediction_runs': len(self.prediction_history),
+            'training_history': self.training_history,
+            'prediction_history': self.prediction_history
+        }
+
+# Usage
+model = DebuggableModel("Test Model", debug=True)
+model.train([[1, 2], [3, 4]], [0, 1])
+predictions = model.predict([[2, 3]])
+
+debug_info = model.get_debug_info()
+print(f"Debug info: {debug_info}")
+</code></pre>
+        </section>
+
+        <section id="references" class="section fade-in">
+            <h2>15. References & Further Reading</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4>📚 Essential Books</h4>
+                    <ul>
+                        <li>"Clean Code" by Robert C. Martin</li>
+                        <li>"Design Patterns" by Gang of Four</li>
+                        <li>"Effective Python" by Brett Slatkin</li>
+                        <li>"Architecture Patterns with Python" by Harry Percival</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>🐍 Python-Specific Resources</h4>
+                    <ul>
+                        <li>Python.org - Official Documentation</li>
+                        <li>Real Python - OOP Tutorials</li>
+                        <li>Python Tricks - Advanced OOP</li>
+                        <li>PEP 8 - Style Guide</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>🔬 Data Science & OOP</h4>
+                    <ul>
+                        <li>scikit-learn - Source Code Examples</li>
+                        <li>pandas - DataFrame Architecture</li>
+                        <li>MLflow - ML Pipeline Design</li>
+                        <li>Apache Airflow - Workflow OOP</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>🛠️ Practical Tools</h4>
+                    <ul>
+                        <li>pytest - Testing OOP Code</li>
+                        <li>mypy - Type Checking</li>
+                        <li>black - Code Formatting</li>
+                        <li>pylint - Code Quality</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🎯 Next Steps</h4>
+                <ol>
+                    <li><strong>Practice:</strong> Refactor existing scripts into classes</li>
+                    <li><strong>Study:</strong> Read scikit-learn source code for inspiration</li>
+                    <li><strong>Build:</strong> Create a complete ML project using OOP</li>
+                    <li><strong>Test:</strong> Write unit tests for your classes</li>
+                    <li><strong>Document:</strong> Add docstrings and type hints</li>
+                </ol>
+            </div>
+
+            <div class="best-practice">
+                <h4>🏆 Final Advice</h4>
+                <p>Start simple and refactor as needed. Don't try to implement every pattern at once. Focus on making your code readable, testable, and maintainable. OOP is a tool to solve problems, not a goal in itself.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update button text
+            const button = document.querySelector('.theme-toggle');
+            button.textContent = newTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        }
+
+        // Load saved theme
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            const button = document.querySelector('.theme-toggle');
+            button.textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add fade-in animation to sections as they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Code block copy functionality
+        document.querySelectorAll('pre code').forEach(block => {
+            const pre = block.parentElement;
+            const button = document.createElement('button');
+            button.textContent = '📋 Copy';
+            button.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: var(--accent);
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.8rem;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            
+            pre.style.position = 'relative';
+            pre.appendChild(button);
+            
+            pre.addEventListener('mouseenter', () => button.style.opacity = '1');
+            pre.addEventListener('mouseleave', () => button.style.opacity = '0');
+            
+            button.addEventListener('click', () => {
+                navigator.clipboard.writeText(block.textContent).then(() => {
+                    button.textContent = '✅ Copied!';
+                    setTimeout(() => button.textContent = '📋 Copy', 2000);
+                });
+            });
+        });
+
+        // Progress indicator
+        const progressBar = document.createElement('div');
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            z-index: 1000;
+            transition: width 0.1s ease;
+        `;
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progressBar.style.width = scrolled + '%';
+        });
+    </script>
+</body>
+</html>
